@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --default-font-family: "Inter", sans-serif;
+  --font-secondary: "Montserrat", serif;
+
+  --animate-move-noise: move-noise 4s linear infinite;
+
+  --color-primary: #ffffff;
+  --color-secondary: #d8d8d8;
+  --color-accent: #ffec99;
+
+  @keyframes move-noise {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100px 100px;
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+a,
+p,
+pre,
+code,
+li,
+button,
+video,
+img,
+iframe,
+figure,
+progress,
+input,
+time {
+  pointer-events: auto;
+}

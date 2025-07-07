@@ -1,0 +1,70 @@
+---
+import { ClientRouter } from "astro:transitions";
+
+import "../globals.css";
+
+import { Background } from "../components/dynamic/background";
+import Link from "../components/static/link.astro";
+
+const pageTitle =
+  Astro.url.pathname === "/" ? "index" : Astro.url.pathname.split("/")[1];
+const currentPath = Astro.url.pathname;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle} • Ilya Dyomin</title>
+    <ClientRouter />
+  </head>
+
+  <body
+    class="flex flex-col lg:flex-row bg-neutral-800 text-white py-6 px-4 lg:py-14 lg:px-10 h-screen lg:space-x-16 selection:bg-accent selection:text-neutral-800"
+  >
+    <Background client:load />
+
+    <div
+      class="flex-none lg:sticky lg:top-0 flex flex-col justify-between mb-8 lg:mb-0 pointer-events-none"
+      transition:persist="true"
+    >
+      <img
+        src="etozhealkipce.svg"
+        alt="senior script kiddie logo"
+        width={253}
+        height={178}
+      />
+
+      <div class="flex flex-col space-y-4 max-w-[129px] mt-4 lg:mt-0">
+        <p class="text-sm lg:text-base">Dyomin Ilya</p>
+
+        <div class="flex flex-col space-y-2 text-xs lg:text-sm font-extralight">
+          <p>Software Developer from Kazakhstan</p>
+          <a href="mailto:alkhipce@mail.ru">alkhipce@mail.ru</a>
+        </div>
+      </div>
+    </div>
+
+    <main
+      class="flex-auto mb-8 lg:mb-0 pointer-events-none"
+      transition:animate="none"
+    >
+      <slot />
+    </main>
+
+    <div
+      class="flex-none lg:sticky lg:bottom-0 flex justify-center lg:justify-end lg:items-end mr-0 pointer-events-none"
+    >
+      <nav
+        class="flex flex-row lg:flex-col items-center lg:items-end space-x-6 lg:space-x-0 lg:space-y-2 max-w-[129px]"
+      >
+        <Link href="/" currentPath={currentPath}>index</Link>
+        <Link href="/about" currentPath={currentPath}>about</Link>
+        <Link href="/work" currentPath={currentPath}>works</Link>
+        <Link href="/notes" currentPath={currentPath}>notes</Link>
+      </nav>
+    </div>
+  </body>
+</html>
