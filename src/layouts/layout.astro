@@ -24,11 +24,11 @@ const currentPath = Astro.url.pathname;
   <body
     class="flex flex-col lg:flex-row bg-neutral-800 text-white py-6 px-4 lg:py-14 lg:px-10 h-screen lg:space-x-16 selection:bg-accent selection:text-neutral-800"
   >
-    <Background client:load />
+    <Background client:load transition:persist="background" />
 
     <div
       class="flex-none lg:sticky lg:top-0 flex flex-col justify-between mb-8 lg:mb-0 pointer-events-none"
-      transition:persist="true"
+      transition:persist="header"
     >
       <img
         src="etozhealkipce.svg"
@@ -60,10 +60,10 @@ const currentPath = Astro.url.pathname;
       <nav
         class="flex flex-row lg:flex-col items-center lg:items-end space-x-6 lg:space-x-0 lg:space-y-2 max-w-[129px]"
       >
-        <Link href="/" currentPath={currentPath}>index</Link>
-        <Link href="/about" currentPath={currentPath}>about</Link>
-        <Link href="/work" currentPath={currentPath}>works</Link>
-        <Link href="/notes" currentPath={currentPath}>notes</Link>
+        <Link client:load href="/" currentPath={currentPath}>index</Link>
+        <Link client:load href="/about" currentPath={currentPath}>about</Link>
+        <Link client:load href="/work" currentPath={currentPath}>works</Link>
+        <Link client:load href="/notes" currentPath={currentPath}>notes</Link>
       </nav>
     </div>
   </body>

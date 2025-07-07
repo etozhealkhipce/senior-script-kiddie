@@ -21,9 +21,21 @@ export function getSvgPathFromStroke(stroke: number[][]) {
   return d.join(" ");
 }
 
+const DRAWING_CONFIG = {
+  size: 7,
+  thinning: 0.5,
+  smoothing: 0.5,
+  streamline: 0.5,
+};
+const MAX_SAVED_DRAWINGS = 20;
+
 export const Background = () => {
   const bgRef = useRef<HTMLDivElement>(null);
   const [points, setPoints] = useState<[number, number, number][]>([]);
+  const [savedDrawings, setSavedDrawings] = useState<
+    [number, number, number][][]
+  >([]);
+  const [isDrawing, setIsDrawing] = useState(false);
 
   useGSAP(() => {
     if (typeof window === "undefined") return;
@@ -44,25 +56,46 @@ export const Background = () => {
 
   const handlePointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     e.preventDefault();
-
     (e.target as SVGSVGElement).setPointerCapture(e.pointerId);
+
     setPoints([[e.pageX, e.pageY, e.pressure]]);
+    setIsDrawing(true);
   };
 
   const handlePointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
     e.preventDefault();
-
     if (e.buttons !== 1) return;
-    setPoints([...points, [e.pageX, e.pageY, e.pressure]]);
+
+    setPoints((prev) => [...prev, [e.pageX, e.pageY, e.pressure]]);
   };
 
-  const pathData = useMemo(() => {
-    const stroke = getStroke(points, {
-      size: 7,
-      thinning: 0.5,
-      smoothing: 0.5,
-      streamline: 0.5,
+  const handlePointerUp = (e: React.PointerEvent<SVGSVGElement>) => {
+    e.preventDefault();
+
+    if (isDrawing && points.length > 1) {
+      const newDrawings = [...savedDrawings, points];
+      setSavedDrawings(newDrawings);
+    }
+
+    if (savedDrawings.length + 1 > MAX_SAVED_DRAWINGS) {
+      setSavedDrawings(savedDrawings.slice(1));
+    }
+
+    setPoints([]);
+    setIsDrawing(false);
+  };
+
+  const savedPaths = useMemo(() => {
+    return savedDrawings.map((drawingPoints) => {
+      const stroke = getStroke(drawingPoints, DRAWING_CONFIG);
+      return getSvgPathFromStroke(stroke);
     });
+  }, [savedDrawings]);
+
+  const currentPathData = useMemo(() => {
+    if (points.length === 0) return "";
+
+    const stroke = getStroke(points, DRAWING_CONFIG);
 
     return getSvgPathFromStroke(stroke);
   }, [points]);
@@ -76,11 +109,15 @@ export const Background = () => {
 
       <svg
         className="fixed inset-0 w-full h-screen pointer-events-auto text-accent stroke-accent fill-accent"
-        style={{ touchAction: "none" }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
       >
-        {points && <path d={pathData} />}
+        {savedPaths.map((pathData, index) => (
+          <path key={`saved-${index}`} d={pathData} />
+        ))}
+
+        {currentPathData && <path d={currentPathData} />}
       </svg>
     </>
   );
