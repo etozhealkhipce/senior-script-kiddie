@@ -1,4 +1,4 @@
-import { useRef } from "react";
+// import { useRef } from "react";
 
 // import { gsap } from "gsap";
 // import { useGSAP } from "@gsap/react";
@@ -8,8 +8,8 @@ import { useRef } from "react";
 // gsap.registerPlugin(ScrambleTextPlugin);
 
 export const HomeContent = () => {
-  const textRefFirst = useRef<HTMLDivElement>(null);
-  const worksLinkRef = useRef<HTMLAnchorElement>(null);
+  // const textRefFirst = useRef<HTMLDivElement>(null);
+  // const worksLinkRef = useRef<HTMLAnchorElement>(null);
 
   // useGSAP(() => {
   //   if (typeof window === "undefined") return;
@@ -25,27 +25,40 @@ export const HomeContent = () => {
   //   }
   // }, []);
 
+  // const arrowContainerRef = useRef<HTMLParagraphElement>(null);
+
+  // useGSAP(() => {
+  //   if (arrowContainerRef.current) {
+  //     gsap.to(arrowContainerRef.current, {
+  //       duration: 1,
+  //       opacity: 1,
+  //     });
+  //   }
+  // }, []);
+
   return (
     <div className="max-w-[460px] space-y-8">
       <div className="flex flex-col space-y-4 font-light">
         <div className="flex items-start">
-          <p ref={textRefFirst} className="max-w-fit">
-            Corem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-            eget condimentum velit, sit amet feugiat lectus.
+          <p className="max-w-fit">
+            Hey there, I'm Ilya. I design and code for the web.
           </p>
         </div>
       </div>
 
       <div className="flex flex-col items-end">
         <div className="flex flex-col items-start space-y-2">
+          {/* <p ref={arrowContainerRef}></p> */}
+
           <a
-            ref={worksLinkRef}
             href="/about"
             className="font-secondary text-5xl font-medium hover:text-neutral-300 cursor-pointer transition-colors"
           >
-            works
+            about me
           </a>
-          <span className="text-secondary font-secondary text-sm">4 items</span>
+          <span className="text-secondary font-secondary text-sm">
+            little more info
+          </span>
         </div>
       </div>
     </div>

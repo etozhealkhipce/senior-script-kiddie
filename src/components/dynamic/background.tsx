@@ -1,7 +1,7 @@
 import { useRef, useState, useMemo } from "react";
 
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+// import { gsap } from "gsap";
+// import { useGSAP } from "@gsap/react";
 import getStroke from "perfect-freehand";
 import React from "react";
 
@@ -30,29 +30,11 @@ const DRAWING_CONFIG = {
 const MAX_SAVED_DRAWINGS = 20;
 
 export const Background = () => {
-  const bgRef = useRef<HTMLDivElement>(null);
   const [points, setPoints] = useState<[number, number, number][]>([]);
   const [savedDrawings, setSavedDrawings] = useState<
     [number, number, number][][]
   >([]);
   const [isDrawing, setIsDrawing] = useState(false);
-
-  useGSAP(() => {
-    if (typeof window === "undefined") return;
-
-    const animate = () => {
-      gsap.to(bgRef.current, {
-        duration: 0.05,
-        backgroundPosition: `${Math.floor(Math.random() * 100) + 1}% ${
-          Math.floor(Math.random() * 10) + 1
-        }%`,
-        ease: "none",
-        onComplete: animate,
-      });
-    };
-
-    animate();
-  }, []);
 
   const handlePointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     e.preventDefault();
@@ -73,12 +55,14 @@ export const Background = () => {
     e.preventDefault();
 
     if (isDrawing && points.length > 1) {
-      const newDrawings = [...savedDrawings, points];
-      setSavedDrawings(newDrawings);
-    }
+      const allDrawings = [...savedDrawings, points];
 
-    if (savedDrawings.length + 1 > MAX_SAVED_DRAWINGS) {
-      setSavedDrawings(savedDrawings.slice(1));
+      const newDrawings =
+        allDrawings.length > MAX_SAVED_DRAWINGS
+          ? allDrawings.slice(1)
+          : allDrawings;
+
+      setSavedDrawings(newDrawings);
     }
 
     setPoints([]);
@@ -102,10 +86,7 @@ export const Background = () => {
 
   return (
     <>
-      <div
-        ref={bgRef}
-        className="fixed inset-0 w-full h-screen pointer-events-none mix-blend-multiply bg-[url(https://static.tumblr.com/rxfwyqf/20Zlzzth8/noise.png)] opacity-15"
-      ></div>
+      <div className="fixed inset-0 w-full h-screen pointer-events-none mix-blend-multiply bg-[url(https://static.tumblr.com/rxfwyqf/20Zlzzth8/noise.png)] opacity-15"></div>
 
       <svg
         className="fixed inset-0 w-full h-screen pointer-events-auto text-accent stroke-accent fill-accent"
