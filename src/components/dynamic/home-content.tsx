@@ -1,13 +1,11 @@
 import { useRef } from "react";
 
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+// import { gsap } from "gsap";
+// import { useGSAP } from "@gsap/react";
 
-import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
-import { SplitText } from "gsap/SplitText";
+// import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 
-gsap.registerPlugin(ScrambleTextPlugin);
-gsap.registerPlugin(SplitText);
+// gsap.registerPlugin(ScrambleTextPlugin);
 
 export const HomeContent = () => {
   const textRefFirst = useRef<HTMLDivElement>(null);
