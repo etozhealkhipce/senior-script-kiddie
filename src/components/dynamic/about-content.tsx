@@ -2,7 +2,7 @@ import { Link } from "./link";
 
 export const AboutContent = () => {
   return (
-    <div className="space-y-8 max-w-[460px]">
+    <div className="space-y-8">
       <div className="flex flex-col">
         <div className="flex flex-col items-start space-y-2">
           <h1 className="font-secondary text-5xl font-medium">about me</h1>
@@ -14,7 +14,7 @@ export const AboutContent = () => {
 
       <div className="flex flex-col space-y-4 font-light">
         <p>
-          Hi! My name is{" "}
+          My name is{" "}
           <span className="font-medium bg-accent text-neutral-800">Ilya</span>.
         </p>
 
@@ -93,7 +93,9 @@ export const AboutContent = () => {
             href: "https://t.me/alkhipce",
           },
         ].map((item) => (
-          <Link href={item.href}>{item.title}</Link>
+          <Link target="_blank" href={item.href}>
+            {item.title}
+          </Link>
         ))}
       </div>
     </div>

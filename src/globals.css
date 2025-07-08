@@ -2,8 +2,10 @@
 @import "tailwindcss";
 
 @theme {
-  --default-font-family: "Inter", sans-serif;
-  --font-secondary: "Montserrat", serif;
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Inter", ui-serif, Georgia, Cambria, "Times New Roman", Times,
+    serif;
 
   --animate-move-noise: move-noise 4s linear infinite;
 

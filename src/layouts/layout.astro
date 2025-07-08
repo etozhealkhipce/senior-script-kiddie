@@ -6,6 +6,8 @@ import "../globals.css";
 import { Background } from "../components/dynamic/background";
 import { Navigation } from "../components/dynamic/navigation";
 import { Breadcrumbs } from "../components/dynamic/breadcrumbs";
+import Logo from "../assets/etozhealkipce.svg";
+import { Image } from "astro:assets";
 
 const pageTitle =
   Astro.url.pathname === "/" ? "index" : Astro.url.pathname.split("/")[1];
@@ -23,23 +25,25 @@ const currentPath = Astro.url.pathname;
   </head>
 
   <body
-    class="flex flex-col lg:flex-row bg-neutral-800 text-white py-6 px-4 lg:py-14 lg:px-10 h-screen lg:space-x-16 selection:bg-accent selection:text-neutral-800"
+    class="flex flex-col lg:flex-row bg-neutral-800 text-white py-6 px-4 lg:py-14 lg:px-10 lg:space-x-16 selection:bg-accent selection:text-neutral-800"
   >
     <Background client:load transition:persist="background" />
 
     <div
-      class="flex-none lg:sticky lg:top-0 flex flex-col justify-between mb-8 lg:mb-0 pointer-events-none"
+      class="relative w-64 flex-none lg:top-0 flex flex-col justify-between mb-4 lg:mb-0 pointer-events-none"
       transition:persist="header"
     >
-      <img
-        src="etozhealkipce.svg"
+      <Image
+        src={Logo}
         alt="senior script kiddie logo"
         width={253}
         height={178}
-        class="z-1"
+        class="static lg:fixed top-14 left-14"
       />
 
-      <div class="flex flex-col space-y-4 max-w-[129px] mt-4 lg:mt-0">
+      <div
+        class="static lg:fixed bottom-14 left-14 flex flex-col space-y-4 max-w-[129px] mt-4 lg:mt-0"
+      >
         <p class="text-sm lg:text-base">Dyomin Ilya</p>
 
         <div class="flex flex-col space-y-2 text-sm font-extralight">
@@ -53,14 +57,14 @@ const currentPath = Astro.url.pathname;
       class="flex-auto mb-8 lg:mb-0 pointer-events-none"
       transition:animate="none"
     >
-      <div class="mb-6">
+      <div class="mb-4 lg:mb-6">
         <Breadcrumbs currentPath={currentPath} client:load />
       </div>
       <slot />
     </main>
 
     <div
-      class="sticky lg:bottom-0 flex justify-center lg:justify-end lg:items-end mr-0 pointer-events-none"
+      class="hidden relative w-64 lg:bottom-0 lg:flex justify-center lg:justify-end lg:items-end mr-0 pointer-events-none"
     >
       <Navigation currentPath={currentPath} client:load />
     </div>

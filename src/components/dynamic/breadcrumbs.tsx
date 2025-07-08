@@ -1,3 +1,5 @@
+import { Link } from "./link";
+
 interface BreadcrumbsProps {
   currentPath: string;
   className?: string;
@@ -25,7 +27,9 @@ export function Breadcrumbs({ currentPath, className = "" }: BreadcrumbsProps) {
       <nav
         className={`flex items-center space-x-2 text-xs lg:text-sm text-neutral-400 ${className}`}
       >
-        <span className="text-accent">index</span>
+        <Link href="/" className="text-accent" isActive>
+          index
+        </Link>
       </nav>
     );
   }
@@ -34,24 +38,17 @@ export function Breadcrumbs({ currentPath, className = "" }: BreadcrumbsProps) {
     <nav
       className={`flex items-center space-x-2 text-xs lg:text-sm text-neutral-400 ${className}`}
     >
-      <a
-        href="/"
-        className="hover:text-neutral-300 transition-colors duration-200"
-      >
-        index
-      </a>
-      {breadcrumbItems.map((item, index) => (
+      <Link href="/">index</Link>
+
+      {breadcrumbItems.map((item) => (
         <div key={item.href} className="flex items-center space-x-2">
           <span className="text-neutral-600">/</span>
           {item.isLast ? (
-            <span className="text-accent">{item.label}</span>
-          ) : (
-            <a
-              href={item.href}
-              className="hover:text-neutral-300 transition-colors duration-200"
-            >
+            <Link href={item.href} className="text-accent" isActive>
               {item.label}
-            </a>
+            </Link>
+          ) : (
+            <Link href={item.href}>{item.label}</Link>
           )}
         </div>
       ))}

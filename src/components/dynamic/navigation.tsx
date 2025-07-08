@@ -1,3 +1,5 @@
+import { Link } from "./link";
+
 type Props = {
   className?: string;
   currentPath: string;
@@ -13,20 +15,14 @@ export function Navigation({ className = "", currentPath }: Props) {
 
   return (
     <nav
-      className={`flex flex-row lg:flex-col items-center lg:items-end space-x-6 lg:space-x-0 lg:space-y-2 max-w-[129px] ${className}`}
+      className={`fixed bottom-14 right-14 flex flex-row lg:flex-col items-center lg:items-end space-y-2 max-w-[129px] ${className}`}
     >
       {links.map((link) => {
         const isActive = currentPath === link.href;
         return (
-          <a
-            key={link.href}
-            href={link.href}
-            className={`hover:text-neutral-300 transition-colors duration-200 text-sm ${
-              isActive ? "text-accent" : "text-neutral-400"
-            }`}
-          >
+          <Link href={link.href} isActive={isActive} className="!py-0">
             {link.label}
-          </a>
+          </Link>
         );
       })}
     </nav>

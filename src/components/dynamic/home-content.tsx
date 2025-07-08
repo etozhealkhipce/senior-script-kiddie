@@ -1,5 +1,7 @@
 // import { useRef } from "react";
 
+import { Link } from "./link";
+
 // import { gsap } from "gsap";
 // import { useGSAP } from "@gsap/react";
 
@@ -37,25 +39,22 @@ export const HomeContent = () => {
   // }, []);
 
   return (
-    <div className="max-w-[460px] space-y-8">
+    <div className="space-y-8">
       <div className="flex flex-col space-y-4 font-light">
-        <div className="flex items-start">
-          <p className="max-w-fit">
-            Hey there, I'm Ilya. I design and code for the web.
-          </p>
-        </div>
+        <p className="w-fit">
+          Hi there, I'm Ilya. I design and code for the web.
+        </p>
       </div>
 
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col lg:ml-48">
         <div className="flex flex-col items-start space-y-2">
-          {/* <p ref={arrowContainerRef}></p> */}
-
-          <a
+          <Link
             href="/about"
-            className="font-secondary text-5xl font-medium hover:text-neutral-300 cursor-pointer transition-colors"
+            className="font-secondary !text-5xl font-medium !p-0"
           >
             about me
-          </a>
+          </Link>
+
           <span className="text-secondary font-secondary text-sm">
             little more info
           </span>
