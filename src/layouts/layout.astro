@@ -7,8 +7,6 @@ import { Background } from "../components/dynamic/common/background";
 import { Navigation } from "../components/dynamic/common/navigation";
 import { Breadcrumbs } from "../components/dynamic/common/breadcrumbs";
 import { Logo } from "../components/dynamic/common/logo";
-
-  
 ---
 
 <html lang="en">
@@ -17,7 +15,10 @@ import { Logo } from "../components/dynamic/common/logo";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{Astro.url.pathname === "/" ? "index" : Astro.url.pathname.split("/")[1];} • Ilya Dyomin</title>
+    <title>
+      {Astro.url.pathname === "/" ? "index" : Astro.url.pathname.split("/")[1]} •
+      Ilya Dyomin
+    </title>
     <ClientRouter />
   </head>
 
@@ -46,7 +47,7 @@ import { Logo } from "../components/dynamic/common/logo";
 
     <main class="flex-auto pointer-events-none" transition:animate="none">
       <div class="mb-4 lg:mb-6">
-        <Breadcrumbs currentPath={currentPath} client:load />
+        <Breadcrumbs currentPath={Astro.url.pathname} client:load />
       </div>
       <slot />
     </main>
