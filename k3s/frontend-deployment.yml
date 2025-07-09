@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: senior-script-kiddie-frontend
+  namespace: senior-script-kiddie
+  labels:
+    app: senior-script-kiddie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: senior-script-kiddie-frontend
+  template:
+    metadata:
+      labels:
+        app: senior-script-kiddie-frontend
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret-senior-script-kiddie-frontend
+      containers:
+        - name: senior-script-kiddie
+          image: ghcr.io/etozhealkhipce/senior-script-kiddie:main
+          ports:
+            - containerPort: 80
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: senior-script-kiddie-frontend-config
+                  key: API_URL
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3

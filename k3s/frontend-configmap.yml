@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: senior-script-kiddie-frontend-config
+  namespace: senior-script-kiddie
+data:
+  API_URL: "https://test.com"

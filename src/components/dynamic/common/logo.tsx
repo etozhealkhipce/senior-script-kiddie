@@ -1,8 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-
-// gsap.registerPlugin(useGSAP);
 
 export const Logo = () => {
   const pathRef = useRef<SVGPathElement>(null);
@@ -52,19 +50,19 @@ export const Logo = () => {
     });
 
     gsap.to(pathRef2.current, {
-      strokeDashoffset: length2 / 2,
+      strokeDashoffset: 0,
       duration: 1,
       ease: "power1.inOut",
     });
 
     gsap.to(pathRef3.current, {
-      strokeDashoffset: length3 / 2,
+      strokeDashoffset: 0,
       duration: 1,
       ease: "power1.inOut",
     });
 
     gsap.to(pathRef4.current, {
-      strokeDashoffset: length4 / 2,
+      strokeDashoffset: 0,
       duration: 1,
       ease: "power1.inOut",
     });
