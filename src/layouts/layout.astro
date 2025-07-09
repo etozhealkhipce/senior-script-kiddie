@@ -3,11 +3,10 @@ import { ClientRouter } from "astro:transitions";
 
 import "../globals.css";
 
-import { Background } from "../components/dynamic/background";
-import { Navigation } from "../components/dynamic/navigation";
-import { Breadcrumbs } from "../components/dynamic/breadcrumbs";
-import Logo from "../assets/etozhealkipce.svg";
-import { Image } from "astro:assets";
+import { Background } from "../components/dynamic/common/background";
+import { Navigation } from "../components/dynamic/common/navigation";
+import { Breadcrumbs } from "../components/dynamic/common/breadcrumbs";
+import { Logo } from "../components/dynamic/common/logo";
 
 const pageTitle =
   Astro.url.pathname === "/" ? "index" : Astro.url.pathname.split("/")[1];
@@ -30,16 +29,10 @@ const currentPath = Astro.url.pathname;
     <Background client:load transition:persist="background" />
 
     <div
-      class="relative w-64 flex-none lg:top-0 flex flex-col justify-between mb-4 lg:mb-0 pointer-events-none"
+      class="relative mt-4 lg:mt-0 w-fit lg:w-64 flex-none lg:top-0 flex flex-col justify-between mb-4 lg:mb-0 pointer-events-none"
       transition:persist="header"
     >
-      <Image
-        src={Logo}
-        alt="senior script kiddie logo"
-        width={253}
-        height={178}
-        class="static lg:fixed top-14 left-14"
-      />
+      <Logo client:load />
 
       <div
         class="static lg:fixed bottom-14 left-14 flex flex-col space-y-4 max-w-[129px] mt-4 lg:mt-0"
@@ -53,10 +46,7 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
 
-    <main
-      class="flex-auto mb-8 lg:mb-0 pointer-events-none"
-      transition:animate="none"
-    >
+    <main class="flex-auto pointer-events-none" transition:animate="none">
       <div class="mb-4 lg:mb-6">
         <Breadcrumbs currentPath={currentPath} client:load />
       </div>

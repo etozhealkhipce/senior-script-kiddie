@@ -23,23 +23,36 @@
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-a,
-p,
-pre,
-code,
-nav,
-li,
-button,
-video,
-iframe,
-span,
-figure,
-progress,
-input,
-time {
-  pointer-events: auto;
+@media (min-width: 768px) {
+  h1,
+  h2,
+  h3,
+  h4,
+  a,
+  p,
+  pre,
+  code,
+  nav,
+  li,
+  button,
+  video,
+  iframe,
+  span,
+  figure,
+  progress,
+  input,
+  textarea,
+  time {
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  a,
+  button,
+  input,
+  textarea,
+  video {
+    pointer-events: auto;
+  }
 }

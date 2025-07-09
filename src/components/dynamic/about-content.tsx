@@ -1,28 +1,21 @@
-import { Link } from "./link";
+import { ContentHeader } from "./common/content-header";
+import { Link } from "./common/link";
 
 export const AboutContent = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-full lg:max-w-xl">
       <div className="flex flex-col">
-        <div className="flex flex-col items-start space-y-2">
-          <h1 className="font-secondary text-5xl font-medium">about me</h1>
-          <span className="text-secondary font-secondary text-sm">
-            and my expirience
-          </span>
-        </div>
+        <ContentHeader title="about me" subtitle="and my expirience" />
       </div>
 
       <div className="flex flex-col space-y-4 font-light">
         <p>
-          My name is{" "}
-          <span className="font-medium bg-accent text-neutral-800">Ilya</span>.
+          My name is <span className="bg-accent/30 text-white">Ilya</span>.
         </p>
 
         <p>
           I’m a{" "}
-          <span className="font-medium bg-accent text-neutral-800">
-            frontend developer
-          </span>{" "}
+          <span className="bg-accent/30 text-white">frontend developer</span>{" "}
           with over{" "}
           <span className="font-medium">6 years of commercial experience</span>.
           In addition to coding, I have experience leading teams and setting up
@@ -78,7 +71,7 @@ export const AboutContent = () => {
         </p>
       </div>
 
-      <div className="flex flex-row items-center space-x-4 text-secondary text-sm">
+      <div className="flex flex-row items-center space-x-4 text-secondary text-sm flex-wrap">
         {[
           {
             title: "@github",

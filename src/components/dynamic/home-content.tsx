@@ -1,6 +1,6 @@
 // import { useRef } from "react";
 
-import { Link } from "./link";
+import { Link } from "./common/link";
 
 // import { gsap } from "gsap";
 // import { useGSAP } from "@gsap/react";
@@ -50,9 +50,9 @@ export const HomeContent = () => {
         <div className="flex flex-col items-start space-y-2">
           <Link
             href="/about"
-            className="font-secondary !text-5xl font-medium !p-0"
+            className="font-secondary !text-3xl lg:!text-5xl font-medium !p-0"
           >
-            about me
+            about me {">"}
           </Link>
 
           <span className="text-secondary font-secondary text-sm">
