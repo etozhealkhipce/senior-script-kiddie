@@ -46,16 +46,16 @@ import { Logo } from "../components/dynamic/common/logo";
     </div>
 
     <main class="flex-auto pointer-events-none" transition:animate="none">
-      <div class="mb-4 lg:mb-6">
-        <Breadcrumbs currentPath={Astro.url.pathname} client:load />
-      </div>
+      <nav class="mb-4 lg:mb-6">
+        <Breadcrumbs initialPath={Astro.url.pathname} client:load />
+      </nav>
       <slot />
     </main>
 
     <div
       class="hidden relative w-64 lg:bottom-0 lg:flex justify-center lg:justify-end lg:items-end mr-0 pointer-events-none"
     >
-      <Navigation currentPath={Astro.url.pathname} client:load />
+      <Navigation initialPath={Astro.url.pathname} client:load />
     </div>
   </body>
 </html>

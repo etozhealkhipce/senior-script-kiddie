@@ -1,12 +1,19 @@
+import { useState, useEffect } from "react";
 import { ALL_ROUTES } from "../../../lib/available-routes";
 import { Link } from "./link";
 
 interface BreadcrumbsProps {
-  currentPath: string;
   className?: string;
+  initialPath: string;
 }
 
-export function Breadcrumbs({ currentPath, className = "" }: BreadcrumbsProps) {
+export function Breadcrumbs({ className = "", initialPath }: BreadcrumbsProps) {
+  const [currentPath, setCurrentPath] = useState(initialPath);
+
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  }, []);
+
   const pathSegments = currentPath
     .split("/")
     .filter((segment) => segment !== "");
