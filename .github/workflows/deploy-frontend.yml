@@ -74,7 +74,7 @@ jobs:
             cd /tmp/k3s-deploy-frontend
 
             echo "CREATING IMAGEPULLSECRET"
-            cat > k3s/frontend-ghcr-secret.yml << EOF
+            cat >frontend-ghcr-secret.yml << EOF
             apiVersion: v1
             kind: Secret
             metadata:
