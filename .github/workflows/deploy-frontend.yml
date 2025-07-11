@@ -10,11 +10,10 @@ env:
 
 jobs:
   release:
-    name: Release image
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup git
+      - name: SETUP GIT
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "<>"
@@ -24,93 +23,82 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Login to GitHub Container Registry
-        run: docker login ghcr.io -u ${{ github.repository_owner }} -p "${{ secrets.GHCR_TOKEN }}"
+      - name: LOGIN TO GITHUB CONTAINER REGISTRY
+        run: docker login ${{ env.REGISTRY }} -u ${{ github.repository_owner }} -p "${{ secrets.GHCR_TOKEN }}"
 
-      - name: Extract metadata for Docker
+      - name: EXTRACT METADATA FOR DOCKER
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push
+      - name: BUILD AND PUSH
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            API_URL=${{ secrets.API_URL }}
 
   deploy:
     needs: release
-    name: Deploy to k3s
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: CHECKOUT
         uses: actions/checkout@v4
 
-      - name: Copy Kubernetes manifests to server
-        uses: appleboy/scp-action@master
+      - name: COPY FILES
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "k3s/"
-          target: "/home/senior-script-kiddie/frontend/"
+          source: "k3s/*"
+          target: "/tmp/k3s-deploy-frontend"
+          strip_components: 1
 
-      - name: Deploy Frontend to Kubernetes via SSH
-        uses: appleboy/ssh-action@master
-        env:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-          API_URL: ${{ secrets.API_URL }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+      - name: DEPLOY
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "🚀 Starting Frontend Kubernetes deployment..."
-
+            echo "CHECKING kubectl"
             if ! command -v kubectl &> /dev/null; then
-                echo "❌ kubectl not found"
+                echo "kubectl NOT FOUND"
                 exit 1
             fi
 
-            cd /home/senior-script-kiddie/frontend
-
-            # Создаем ImagePullSecret для ghcr
-            echo "🔐 Creating ImagePullSecret..."
+            echo "CREATING IMAGEPULLSECRET"
+            cd /tmp/k3s-deploy-frontend
             cat > k3s/frontend-ghcr-secret.yaml << EOF
             apiVersion: v1
             kind: Secret
             metadata:
               name: ghcr-secret-frontend
-              namespace: expense-tracker
+              namespace: sskd
             type: kubernetes.io/dockerconfigjson
             data:
               .dockerconfigjson: $(echo -n '{"auths":{"ghcr.io":{"username":"${{ github.repository_owner }}","password":"${{ secrets.GHCR_TOKEN }}","auth":"'$(echo -n "${{ github.repository_owner }}:${{ secrets.GHCR_TOKEN }}" | base64 -w 0)'"}}}'| base64 -w 0)
             EOF
 
-            echo "🔐 Creating secrets and configs..."
-            kubectl apply -f k3s/frontend-ghcr-secret.yaml
-            kubectl apply -f k3s/frontend-configmap.yaml
-
-            echo "🐘 Deploying Frontend..."
+            echo "APPLYING MANIFESTS"
             kubectl apply -f k3s/frontend-deployment.yaml
             kubectl apply -f k3s/frontend-service.yaml
 
-            echo "⏳ Waiting for Frontend..."
-            kubectl rollout status deployment/expense-tracker-frontend -n expense-tracker --timeout=300s
+            echo "WAITING FOR POD"
+            kubectl rollout status deployment/sskd-frontend -n sskd --timeout=300s
 
-            echo "🌐 Configuring ingress..."
+            echo "CONFIGURING INGRESS"
             kubectl apply -f k3s/frontend-ingress.yaml
 
-            echo "📊 Deploy status:"
-            kubectl get pods -n expense-tracker
-            kubectl get services -n expense-tracker
-            kubectl get ingress -n expense-tracker
+            echo "DEPLOY STATUS"
+            kubectl get pods -n sskd
+            kubectl get services -n sskd
+            kubectl get ingress -n sskd
 
-            echo "✅ Frontend Kubernetes deployment completed successfully!"
+            rm -rf /tmp/k3s-deploy-frontend
+
+            echo "FINISHED"

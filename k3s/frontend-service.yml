@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: senior-script-kiddie-frontend-service
-  namespace: senior-script-kiddie
+  name: sskd-frontend-service
+  namespace: sskd
   labels:
-    app: senior-script-kiddie-frontend
+    app: sskd-frontend
 spec:
   selector:
-    app: senior-script-kiddie-frontend
+    app: sskd-frontend
   ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 31000
-  type: NodePort
+    number: 80
+    targetPort: 8080
