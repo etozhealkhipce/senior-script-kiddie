@@ -13,7 +13,8 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
-
+    outputs:
+      image-version: ${{ steps.meta.outputs.version }}
     steps:
       - name: SETUP GIT
         run: |
@@ -109,7 +110,7 @@ jobs:
             kubectl apply -f frontend-service.yml
 
             echo "SETTING NEW TAG TO DEPLOYMENT"
-            kubectl set image deployment/sskd-frontend-deployment sskd-frontend=${{ env.REGISTRY }}/${{ env.REPO_NAME }}:${{ steps.meta.outputs.version }} -n sskd
+            kubectl set image deployment/sskd-frontend-deployment sskd-frontend=${{ env.REGISTRY }}/${{ env.REPO_NAME }}:${{ needs.release.outputs.image-version }} -n sskd
 
             echo "WAITING FOR POD"
             kubectl rollout status deployment/sskd-frontend-deployment -n sskd --timeout=300s
