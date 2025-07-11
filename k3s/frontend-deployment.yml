@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret-frontend
       containers:
         - name: sskd-frontend
-          image: ghcr.io/sskd/sskd-frontend:main
+          image: ghcr.io/etozhealkhipce/senior-script-kiddie:main
           ports:
             - containerPort: 80
           env:
