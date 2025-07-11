@@ -91,7 +91,7 @@ jobs:
             kubectl apply -f frontend-service.yml
 
             echo "WAITING FOR POD"
-            kubectl rollout status deployment/sskd-frontend -n sskd --timeout=300s
+            kubectl rollout status deployment/sskd-frontend-deployment -n sskd --timeout=300s
 
             echo "DEPLOY STATUS"
             kubectl get pods -n sskd
