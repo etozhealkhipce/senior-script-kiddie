@@ -18,7 +18,7 @@ jobs:
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "<>"
 
-      - name: Checkout code
+      - name: CHECKOUT
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -85,14 +85,12 @@ jobs:
             EOF
 
             echo "APPLYING MANIFESTS"
-            kubectl apply -f k3s/frontend-deployment.yaml
-            kubectl apply -f k3s/frontend-service.yaml
+            kubectl apply -f k3s/frontend-ghcr-secret.yaml
+            kubectl apply -f k3s/frontend-deployment.yml
+            kubectl apply -f k3s/frontend-service.yml
 
             echo "WAITING FOR POD"
             kubectl rollout status deployment/sskd-frontend -n sskd --timeout=300s
-
-            echo "CONFIGURING INGRESS"
-            kubectl apply -f k3s/frontend-ingress.yaml
 
             echo "DEPLOY STATUS"
             kubectl get pods -n sskd

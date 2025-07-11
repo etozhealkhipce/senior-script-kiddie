@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sskd-frontend
+  name: sskd-frontend-deployment
   namespace: sskd
   labels:
     app: sskd-frontend
