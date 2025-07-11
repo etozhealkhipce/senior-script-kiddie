@@ -42,5 +42,6 @@ RUN apk update
 RUN apk add gettext
 
 COPY --from=build /build/dist ./
+COPY --from=build /build/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]

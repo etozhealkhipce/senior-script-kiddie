@@ -20,6 +20,7 @@ spec:
       containers:
         - name: sskd-frontend
           image: ghcr.io/etozhealkhipce/senior-script-kiddie:main
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           env:
