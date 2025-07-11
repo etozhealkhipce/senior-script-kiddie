@@ -8,6 +8,7 @@ env:
   REGISTRY: ghcr.io
   REPO_NAME: ${{ github.repository }}
   IMAGE_NAME: ${{ github.sha }}
+  REPO_OWNER: ${{ github.repository_owner }}
 
 jobs:
   release:
@@ -25,13 +26,15 @@ jobs:
           fetch-depth: 0
 
       - name: LOGIN TO GITHUB CONTAINER REGISTRY
-        run: docker login ${{ env.REGISTRY }} -u ${{ github.repository_owner }} -p "${{ secrets.GHCR_TOKEN }}"
+        run: docker login ${{ env.REGISTRY }} -u ${{ env.REPO_OWNER }} -p "${{ secrets.GHCR_TOKEN }}"
 
       - name: EXTRACT METADATA FOR DOCKER
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}:${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}
+          tags: |
+            type=sha
 
       - name: BUILD AND PUSH
         uses: docker/build-push-action@v4
@@ -106,7 +109,7 @@ jobs:
             kubectl apply -f frontend-service.yml
 
             echo "SETTING NEW TAG TO DEPLOYMENT"
-            kubectl set image deployment/sskd-frontend-deployment sskd-frontend=${{ env.REGISTRY }}/${{ env.REPO_NAME }}:${{ env.IMAGE_NAME }} -n sskd
+            kubectl set image deployment/sskd-frontend-deployment sskd-frontend=${{ env.REGISTRY }}/${{ env.REPO_NAME }}:${{ steps.meta.outputs.version }} -n sskd
 
             echo "WAITING FOR POD"
             kubectl rollout status deployment/sskd-frontend-deployment -n sskd --timeout=300s
