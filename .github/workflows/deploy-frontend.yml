@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.sha }}
 
 jobs:
   release:
@@ -103,6 +103,9 @@ jobs:
             kubectl apply -f api-url-secret.yml
             kubectl apply -f frontend-deployment.yml
             kubectl apply -f frontend-service.yml
+
+            echo "SETTING NEW TAG TO DEPLOYMENT"
+            kubectl set image deployment/sskd-frontend-deployment sskd-frontend=${{ env.REGISTRY }}/${{ github.repository }}:$IMAGE_NAME -n sskd
 
             echo "WAITING FOR POD"
             kubectl rollout status deployment/sskd-frontend-deployment -n sskd --timeout=300s
