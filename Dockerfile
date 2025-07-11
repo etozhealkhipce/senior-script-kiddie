@@ -7,9 +7,10 @@ FROM node:20-alpine as base
 FROM base AS deps
 WORKDIR /deps
 
-COPY package.json package.lock* ./
+COPY package.json yarn.lock ./
 
-RUN yarn install --force --frozen-lockfile && yarn cache clean --force
+RUN yarn install --force --frozen-lockfile
+RUN yarn add esbuild@^0.25.0 --exact
 
 ###################
 # BUILD
