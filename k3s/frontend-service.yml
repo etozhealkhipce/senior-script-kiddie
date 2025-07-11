@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sskd-frontend-service
+  name: sskd-frontend
   namespace: sskd
   labels:
     app: sskd-frontend
