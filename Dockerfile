@@ -18,9 +18,9 @@ RUN yarn install --force --frozen-lockfile && yarn cache clean --force
 FROM base AS build
 WORKDIR /build
 
-ARG API_URL_ARG
+ARG API_URL
 ENV NODE_ENV production
-ENV API_URL=$API_URL_ARG
+ENV API_URL=$API_URL
 
 COPY --from=deps /deps/node_modules ./node_modules
 COPY . .
@@ -34,8 +34,8 @@ RUN yarn build
 FROM nginx:1.29.0-alpine-slim AS final
 WORKDIR /final
 
-ARG API_URL_ARG
-ENV API_URL=$API_URL_ARG
+ARG API_URL
+ENV API_URL=$API_URL
 
 RUN apk update
 RUN apk add gettext
