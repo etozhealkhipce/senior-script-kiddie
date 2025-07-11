@@ -12,4 +12,7 @@ export default defineConfig({
   },
   prefetch: true,
   trailingSlash: "never",
+  build: {
+    format: "file",
+  },
 });
