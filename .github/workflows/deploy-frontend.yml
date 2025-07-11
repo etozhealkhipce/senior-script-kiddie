@@ -71,9 +71,10 @@ jobs:
                 exit 1
             fi
 
-            echo "CREATING IMAGEPULLSECRET"
             cd /tmp/k3s-deploy-frontend
-            cat > k3s/frontend-ghcr-secret.yaml << EOF
+
+            echo "CREATING IMAGEPULLSECRET"
+            cat > k3s/frontend-ghcr-secret.yml << EOF
             apiVersion: v1
             kind: Secret
             metadata:
@@ -85,9 +86,9 @@ jobs:
             EOF
 
             echo "APPLYING MANIFESTS"
-            kubectl apply -f k3s/frontend-ghcr-secret.yaml
-            kubectl apply -f k3s/frontend-deployment.yml
-            kubectl apply -f k3s/frontend-service.yml
+            kubectl apply -f frontend-ghcr-secret.yml
+            kubectl apply -f frontend-deployment.yml
+            kubectl apply -f frontend-service.yml
 
             echo "WAITING FOR POD"
             kubectl rollout status deployment/sskd-frontend -n sskd --timeout=300s
