@@ -11,4 +11,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   prefetch: true,
+  trailingSlash: "never",
 });
