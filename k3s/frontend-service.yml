@@ -9,5 +9,5 @@ spec:
   selector:
     app: sskd-frontend
   ports:
-    number: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 80
