@@ -25,6 +25,11 @@ spec:
           env:
             - name: NODE_ENV
               value: "production"
+            - name: API_URL_ARG
+              valueFrom:
+                secretKeyRef:
+                  name: api-url-secret
+                  key: api-url
           resources:
             requests:
               memory: "128Mi"

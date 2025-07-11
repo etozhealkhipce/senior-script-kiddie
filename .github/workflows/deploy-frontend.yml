@@ -75,7 +75,7 @@ jobs:
 
             cd /tmp/k3s-deploy-frontend
 
-            echo "CREATING IMAGEPULLSECRET"
+            echo "CREATING SECRETS"
             cat >frontend-ghcr-secret.yml << EOF
             apiVersion: v1
             kind: Secret
@@ -87,8 +87,20 @@ jobs:
               .dockerconfigjson: $(echo -n '{"auths":{"ghcr.io":{"username":"${{ github.repository_owner }}","password":"${{ secrets.GHCR_TOKEN }}","auth":"'$(echo -n "${{ github.repository_owner }}:${{ secrets.GHCR_TOKEN }}" | base64 -w 0)'"}}}'| base64 -w 0)
             EOF
 
+            cat >api-url-secret.yml << EOF
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: api-url-secret
+              namespace: sskd
+            type: Opaque
+            data:
+              api-url: $(echo -n "${{ secrets.API_URL }}" | base64 -w 0)
+            EOF
+
             echo "APPLYING MANIFESTS"
             kubectl apply -f frontend-ghcr-secret.yml
+            kubectl apply -f api-url-secret.yml
             kubectl apply -f frontend-deployment.yml
             kubectl apply -f frontend-service.yml
 
