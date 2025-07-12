@@ -1,65 +1,57 @@
-// import { useRef } from "react";
-
+import { useRef } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import SplitText from "gsap/SplitText";
 import { Link } from "./common/link";
-
-// import { gsap } from "gsap";
-// import { useGSAP } from "@gsap/react";
-
-// import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
-
-// gsap.registerPlugin(ScrambleTextPlugin);
+gsap.registerPlugin(SplitText);
 
 export const HomeContent = () => {
-  // const textRefFirst = useRef<HTMLDivElement>(null);
-  // const worksLinkRef = useRef<HTMLAnchorElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const linkRef = useRef<HTMLDivElement>(null);
 
-  // useGSAP(() => {
-  //   if (typeof window === "undefined") return;
-
-  //   if (textRefFirst.current) {
-  //     gsap.to(textRefFirst.current, {
-  //       duration: 2,
-  //       scrambleText:
-  //         "Corem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget condimentum velit, sit amet feugiat lectus.",
-  //       chars: "01",
-  //       speed: 0.4,
-  //     });
-  //   }
-  // }, []);
-
-  // const arrowContainerRef = useRef<HTMLParagraphElement>(null);
-
-  // useGSAP(() => {
-  //   if (arrowContainerRef.current) {
-  //     gsap.to(arrowContainerRef.current, {
-  //       duration: 1,
-  //       opacity: 1,
-  //     });
-  //   }
-  // }, []);
+  useGSAP(() => {
+    if (!containerRef.current) return;
+    const tl = gsap.timeline();
+    tl.set(containerRef.current, { opacity: 1 });
+    const split = SplitText.create(textRef.current, { type: "words" });
+    gsap.set(linkRef.current, { opacity: 0, y: -30 });
+    tl.from(split.words, {
+      opacity: 0,
+      duration: 0.7,
+      stagger: 0.05,
+      ease: "power2.out",
+    });
+    tl.to(linkRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+    });
+  }, []);
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col space-y-4 font-light">
-        <p className="w-fit">
-          Hi there, I'm Ilya. I design and code for the web.
-        </p>
-      </div>
-
-      <div className="flex flex-col lg:ml-48">
-        <div className="flex flex-col items-start space-y-2">
-          <Link
-            href="/about"
-            className="font-secondary !text-3xl lg:!text-5xl font-medium !p-0"
-          >
-            about me {">"}
-          </Link>
-
-          <span className="text-secondary font-secondary text-sm">
-            little more info
-          </span>
+    <>
+      <div ref={containerRef} className="space-y-8 opacity-0">
+        <div className="flex flex-col space-y-4 font-light">
+          <p className="w-fit split" ref={textRef}>
+            Hi there, I'm Ilya. I design and code for the web.
+          </p>
+        </div>
+        <div className="flex flex-col lg:ml-48" ref={linkRef}>
+          <div className="flex flex-col items-start space-y-2">
+            <Link
+              href="/about"
+              className="font-secondary !text-3xl lg:!text-5xl font-medium !p-0"
+            >
+              about me {">"}
+            </Link>
+            <span className="text-secondary font-secondary text-sm">
+              little more info
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

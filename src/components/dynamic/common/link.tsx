@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { forwardRef, type FC } from "react";
 
 type Props = {
   href: string;
@@ -8,23 +8,20 @@ type Props = {
   target?: "_blank" | "_self";
 };
 
-export const Link: FC<Props> = ({
-  href,
-  children,
-  className = "",
-  isActive,
-  target = "_self",
-}) => {
-  return (
-    <a
-      href={href}
-      target={target}
-      rel="noopener noreferrer"
-      className={`hover:text-neutral-300 transition-colors duration-200 text-sm py-4 lg:-0 ${
-        isActive ? "text-accent" : "text-neutral-400"
-      } ${className}`}
-    >
-      {children}
-    </a>
-  );
-};
+export const Link = forwardRef<HTMLAnchorElement, Props>(
+  ({ href, children, className = "", isActive, target = "_self" }, ref) => {
+    return (
+      <a
+        ref={ref}
+        href={href}
+        target={target}
+        rel="noopener noreferrer"
+        className={`hover:text-neutral-300 transition-colors duration-200 text-sm py-4 lg:-0 ${
+          isActive ? "text-accent" : "text-neutral-400"
+        } ${className}`}
+      >
+        {children}
+      </a>
+    );
+  }
+);
