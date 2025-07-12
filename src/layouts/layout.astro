@@ -20,6 +20,43 @@ import { Preloader } from "../components/dynamic/common/preloader";
       {Astro.url.pathname === "/" ? "index" : Astro.url.pathname.split("/")[1]} •
       Ilya Dyomin
     </title>
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Software Developer from Kazakhstan. Portfolio, notes, and projects by Ilya Dyomin."
+    />
+    <meta
+      name="keywords"
+      content="Ilya Dyomin, Software Developer, Kazakhstan, Portfolio, Notes, Projects, Web Development"
+    />
+    <link rel="canonical" href={Astro.url.href} />
+    <!-- OpenGraph Meta Tags -->
+    <meta
+      property="og:title"
+      content={Astro.url.pathname === "/"
+        ? "index • Ilya Dyomin"
+        : `${Astro.url.pathname.split("/")[1]} • Ilya Dyomin`}
+    />
+    <meta
+      property="og:description"
+      content="Software Developer from Kazakhstan. Portfolio, notes, and projects by Ilya Dyomin."
+    />
+    <meta property="og:image" content="/base.jpg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content={Astro.url.pathname === "/"
+        ? "index • Ilya Dyomin"
+        : `${Astro.url.pathname.split("/")[1]} • Ilya Dyomin`}
+    />
+    <meta
+      name="twitter:description"
+      content="Software Developer from Kazakhstan. Portfolio, notes, and projects by Ilya Dyomin."
+    />
+    <meta name="twitter:image" content="/base.jpg" />
     <ClientRouter />
   </head>
 
