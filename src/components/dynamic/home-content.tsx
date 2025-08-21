@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import SplitText from "gsap/SplitText";
+import { SplitText } from "gsap/dist/SplitText";
 import { Link } from "./common/link";
 gsap.registerPlugin(SplitText);
 

@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FC } from "react";
 import { ALL_ROUTES } from "../../../lib/available-routes";
 import { Link } from "./link";
 
-interface BreadcrumbsProps {
+type Props = {
   className?: string;
   initialPath: string;
-}
+};
 
-export function Breadcrumbs({ className = "", initialPath }: BreadcrumbsProps) {
+export const Breadcrumbs: FC<Props> = ({ className = "", initialPath }) => {
   const [currentPath, setCurrentPath] = useState(initialPath);
 
   useEffect(() => {
@@ -76,4 +76,4 @@ export function Breadcrumbs({ className = "", initialPath }: BreadcrumbsProps) {
       </nav>
     </>
   );
-}
+};

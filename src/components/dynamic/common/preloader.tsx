@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react";
 // @ts-expect-error: no types for fontfaceobserver
 import FontFaceObserver from "fontfaceobserver";
 import { LogoSVG } from "./logo-svg";
@@ -7,7 +7,7 @@ const FONT_TIMEOUT = 4000; // ms
 const MIN_SHOW_TIME = 1500; // ms
 const FONT_FAMILIES = ["Montserrat", "Inter"];
 
-export const Preloader = () => {
+export const Preloader: FC = () => {
   const [visible, setVisible] = useState(true);
 
   // Font loading logic

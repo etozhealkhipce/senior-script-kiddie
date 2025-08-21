@@ -1,10 +1,10 @@
-import { useRef } from "react";
+import { useRef, type FC } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ContentHeader } from "./common/content-header";
 import { Link } from "./common/link";
 
-export const AboutContent = () => {
+export const AboutContent: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const socialLinksRef = useRef<HTMLDivElement>(null);

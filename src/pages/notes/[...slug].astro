@@ -1,0 +1,173 @@
+---
+import { NoteContent } from "../../components/dynamic/notes-page/note-content";
+import Layout from "../../layouts/layout.astro";
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { slug: "effector-useful-links" },
+      props: {
+        title: "effector useful links",
+        content: {
+          paragraphs: [
+            {
+              id: "intro",
+              elements: [
+                {
+                  type: "text" as const,
+                  content:
+                    "Effector мощный инструмент для управления состоянием приложений позволяющий отделить бизнес логику от рендера",
+                },
+              ],
+            },
+            {
+              id: "link1",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://effector.dev/",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content:
+                    " — официальная дока (там актуальные линки на нейродоки)",
+                },
+              ],
+            },
+            {
+              id: "link2",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://patronum.effector.dev/",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — хелперы для упрощения жизни",
+                },
+              ],
+            },
+            {
+              id: "link3",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://withease.effector.dev/",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — набор классных библиотек",
+                },
+              ],
+            },
+            {
+              id: "link4",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://github.com/russia-consulate/webapp/tree/main",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — проект с хорошим конфигом",
+                },
+              ],
+            },
+            {
+              id: "link5",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://github.com/etozhealkhipce/spa-front-starter",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content:
+                    " — мой стартер проект для гитхаба (на основе проекта выше)",
+                },
+              ],
+            },
+            {
+              id: "link6",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://github.com/Kelin2025/effector-factorio",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — крутой проект для переиспользования model + ui",
+                },
+              ],
+            },
+            {
+              id: "link7",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://github.com/yumauri/effector-storage",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content:
+                    " — синхронизация сторов с внешними хранилищами (ls, query)",
+                },
+              ],
+            },
+            {
+              id: "link8",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://atomic-router.github.io/",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — роутер с поддержкой effector",
+                },
+              ],
+            },
+            {
+              id: "link9",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://github.com/AlexeyDuybo/effector-action",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — управление событиями в императивном стиле",
+                },
+              ],
+            },
+          ],
+        },
+        date: "08-21-2025",
+        tags: ["effector", "links"],
+      },
+    },
+  ];
+}
+
+const { slug } = Astro.params;
+const { title, content, date, tags } = Astro.props;
+---
+
+<Layout>
+  <NoteContent
+    client:load
+    title={title}
+    content={content}
+    date={date}
+    tags={tags}
+  />
+</Layout>

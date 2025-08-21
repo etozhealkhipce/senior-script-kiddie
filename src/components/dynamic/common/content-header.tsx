@@ -1,14 +1,11 @@
-import { useRef } from "react";
-
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import { type FC } from "react";
 
 type Props = {
   title: string;
   subtitle: string;
 };
 
-export const ContentHeader = ({ title, subtitle }: Props) => {
+export const ContentHeader: FC<Props> = ({ title, subtitle }) => {
   return (
     <div className="flex flex-col items-start space-y-2">
       <h1 className="font-secondary text-3xl lg:text-5xl font-medium">

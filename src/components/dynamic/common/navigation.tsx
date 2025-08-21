@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from "react";
 import { ALL_ROUTES } from "../../../lib/available-routes";
 import { Link } from "./link";
 
@@ -7,7 +7,7 @@ type Props = {
   initialPath: string;
 };
 
-export function Navigation({ className = "", initialPath }: Props) {
+export const Navigation: FC<Props> = ({ className = "", initialPath }) => {
   const [currentPath, setCurrentPath] = useState(initialPath);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ export function Navigation({ className = "", initialPath }: Props) {
       })}
     </nav>
   );
-}
+};

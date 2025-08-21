@@ -1,8 +1,12 @@
-import { useRef } from "react";
+import { useRef, type FC } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-export function LogoSVG({ animate = false }: { animate?: boolean }) {
+type Props = {
+  animate?: boolean;
+};
+
+export const LogoSVG: FC<Props> = ({ animate = false }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const pathRef2 = useRef<SVGPathElement>(null);
   const pathRef3 = useRef<SVGPathElement>(null);
@@ -128,4 +132,4 @@ export function LogoSVG({ animate = false }: { animate?: boolean }) {
       </g>
     </svg>
   );
-}
+};

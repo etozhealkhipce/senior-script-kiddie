@@ -1,10 +1,10 @@
-import { useRef } from "react";
+import { useRef, type FC } from "react";
 import { ContentHeader } from "../common/content-header";
 import { ProjectCard } from "./project-card";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 
-export const WorkContent = () => {
+export const WorkContent: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement[]>([]);
   const headerRef = useRef<HTMLDivElement>(null);

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, type FC } from "react";
 
 import getStroke from "perfect-freehand";
 import React from "react";
@@ -12,7 +12,7 @@ const DRAWING_CONFIG = {
 };
 const MAX_SAVED_DRAWINGS = 20;
 
-export const Background = () => {
+export const Background: FC = () => {
   const [points, setPoints] = useState<[number, number, number][]>([]);
   const [savedDrawings, setSavedDrawings] = useState<
     [number, number, number][][]
