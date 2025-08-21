@@ -41,7 +41,10 @@ export const Breadcrumbs: FC<Props> = ({ className = "", initialPath }) => {
             <Link
               href={route.href}
               className={currentPath === route.href ? "text-accent" : ""}
-              isActive={currentPath === route.href}
+              isActive={
+                currentPath === route.href ||
+                (currentPath.includes(route.href) && route.href !== "/")
+              }
             >
               {route.label}
             </Link>
@@ -67,7 +70,14 @@ export const Breadcrumbs: FC<Props> = ({ className = "", initialPath }) => {
                     {item.label}
                   </Link>
                 ) : (
-                  <Link href={item.href}>{item.label}</Link>
+                  <Link
+                    href={item.href}
+                    isActive={
+                      currentPath.includes(item.href) && item.href !== "/"
+                    }
+                  >
+                    {item.label}
+                  </Link>
                 )}
               </div>
             ))}

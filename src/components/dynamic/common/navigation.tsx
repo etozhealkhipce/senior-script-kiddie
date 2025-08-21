@@ -19,7 +19,10 @@ export const Navigation: FC<Props> = ({ className = "", initialPath }) => {
       className={`fixed bottom-14 right-14 flex flex-row lg:flex-col items-center lg:items-end space-y-2 max-w-[129px] ${className} hidden lg:flex`}
     >
       {ALL_ROUTES.map((link) => {
-        const isActive = currentPath === link.href;
+        const isActive =
+          currentPath === link.href ||
+          (currentPath.includes(link.href) && link.href !== "/");
+
         return (
           <Link
             href={link.href}

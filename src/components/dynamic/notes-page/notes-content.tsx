@@ -68,8 +68,8 @@ export const NotesContent: FC = () => {
                 highlight: true,
               },
             ],
-            description: "Useful links for getting started with Effector",
-            date: "2024-01-15",
+            description: "полезные ссылки для работы с effector",
+            date: "22.08.2025",
             slug: "effector-useful-links",
           },
         ].map((note) => (

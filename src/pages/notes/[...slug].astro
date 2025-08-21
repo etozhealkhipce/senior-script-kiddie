@@ -149,9 +149,37 @@ export function getStaticPaths() {
                 },
               ],
             },
+            {
+              id: "link10",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://eslint.effector.dev/",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — eslint плагины",
+                },
+              ],
+            },
+            {
+              id: "link11",
+              elements: [
+                {
+                  type: "link" as const,
+                  url: "https://github.com/effector/next",
+                  external: true,
+                },
+                {
+                  type: "text" as const,
+                  content: " — адаптер для next.js",
+                },
+              ],
+            },
           ],
         },
-        date: "08-21-2025",
+        date: "22.08.2025",
         tags: ["effector", "links"],
       },
     },
