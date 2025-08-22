@@ -57,7 +57,7 @@ export const NotesContent: FC = () => {
       <div className="flex flex-col space-y-4 font-light">
         {[
           {
-            title: "Effector Useful Links",
+            title: "effector useful links",
             subtitle: [
               {
                 title: "effector",
