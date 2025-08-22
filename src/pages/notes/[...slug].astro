@@ -186,11 +186,10 @@ export function getStaticPaths() {
   ];
 }
 
-const { slug } = Astro.params;
 const { title, content, date, tags } = Astro.props;
 ---
 
-<Layout>
+<Layout title={title}>
   <NoteContent
     client:load
     title={title}

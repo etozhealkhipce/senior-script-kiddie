@@ -8,17 +8,27 @@ import { Navigation } from "../components/dynamic/common/navigation";
 import { Breadcrumbs } from "../components/dynamic/common/breadcrumbs";
 import { Logo } from "../components/dynamic/common/logo";
 import { Preloader } from "../components/dynamic/common/preloader";
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>
-      {Astro.url.pathname === "/" ? "index" : Astro.url.pathname.split("/")[1]} •
-      Ilya Dyomin
+      {
+        title ||
+          (Astro.url.pathname === "/"
+            ? "index"
+            : Astro.url.pathname.split("/")[1])
+      } • Ilya Dyomin
     </title>
     <!-- SEO Meta Tags -->
     <meta
