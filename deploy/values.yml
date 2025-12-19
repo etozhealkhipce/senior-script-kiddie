@@ -1,0 +1,11 @@
+app:
+  name: sskd-frontend
+
+  ingress:
+    enabled: true
+    host: sskd.tech
+
+  secrets:
+    apiUrl:
+      enabled: true
+      envName: API_URL_ARG

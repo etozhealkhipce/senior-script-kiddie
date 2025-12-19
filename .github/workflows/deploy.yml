@@ -1,0 +1,13 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    uses: etozhealkhipce/senior-script-kiddie-k3s/.github/workflows/deploy-app.yml@main
+    with:
+      app_name: sskd-frontend
+      app_host: sskd.tech
+    secrets: inherit
