@@ -88,7 +88,7 @@ export const CookieBanner: FC<TProps> = ({
     <div
       role="dialog"
       aria-label="Cookie consent"
-      className="pointer-events-auto flex fixed w-[180px] lg:w-auto lg:relative bottom-6 lg:bottom-auto left-4 lg:left-auto right-4 lg:right-auto"
+      className="pointer-events-auto p-2 gap-2 rounded-lg bg-neutral-800 lg:p-0 lg:gap-0 lg:bg-transparent flex fixed w-[200px] lg:w-auto lg:relative bottom-6 lg:bottom-auto left-4 lg:left-auto right-4 lg:right-auto z-50"
     >
       <p className="text-xs font-extralight text-neutral-300">{text}</p>
       <Button
