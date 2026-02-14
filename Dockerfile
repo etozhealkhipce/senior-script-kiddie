@@ -16,7 +16,7 @@ RUN yarn add esbuild@^0.25.0 --exact
 # BUILD
 ###################
 
-FROM base AS build
+FROM node:20-alpine AS build
 WORKDIR /build
 
 ARG API_URL

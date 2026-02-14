@@ -8,6 +8,8 @@ import { Navigation } from "../components/dynamic/common/navigation";
 import { Breadcrumbs } from "../components/dynamic/common/breadcrumbs";
 import { Logo } from "../components/dynamic/common/logo";
 import { Preloader } from "../components/dynamic/common/preloader";
+import GoogleAnalytics from "../components/GoogleAnalytics.astro";
+import CookieBanner from "../components/CookieBanner.astro";
 
 interface Props {
   title?: string;
@@ -67,6 +69,7 @@ const { title } = Astro.props;
       content="Software Developer from Kazakhstan. Portfolio, notes, and projects by Ilya Dyomin."
     />
     <meta name="twitter:image" content="/base.jpg" />
+    <GoogleAnalytics />
     <ClientRouter />
   </head>
 
@@ -85,13 +88,14 @@ const { title } = Astro.props;
     >
       <Logo client:load />
       <div
-        class="static lg:fixed bottom-14 left-14 flex flex-col space-y-4 max-w-[129px] mt-4 lg:mt-0"
+        class="static lg:fixed bottom-14 left-14 flex flex-col space-y-4 max-w-[259px] mt-4 lg:mt-0"
       >
         <p class="text-sm lg:text-base">Dyomin Ilya</p>
         <div class="flex flex-col space-y-2 text-sm font-extralight">
           <p>Software Developer from Kazakhstan</p>
           <a href="mailto:alkhipce@mail.ru">alkhipce@mail.ru</a>
         </div>
+        <CookieBanner />
       </div>
     </div>
     <main class="flex-auto pointer-events-none" transition:animate="none">
