@@ -1,5 +1,5 @@
 import { useEffect, useState, type FC } from "react";
-import { ALL_ROUTES } from "../../../lib/available-routes";
+import { ALL_ROUTES } from "@/lib/available-routes";
 import { Link } from "./link";
 
 type Props = {

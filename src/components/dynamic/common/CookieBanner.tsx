@@ -1,51 +1,6 @@
 import { useState, useEffect, type FC } from "react";
-import { Button } from "../../ui/Button";
-import { COOKIE_PREFIX } from "../../../lib/cookie-prefix";
-
-const STORAGE_KEY = `${COOKIE_PREFIX}cc_consent`;
-
-type TConsentState = {
-  analytics: boolean;
-} | null;
-
-const getStored = (): TConsentState => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as { analytics?: boolean };
-    return { analytics: Boolean(parsed.analytics) };
-  } catch {
-    return null;
-  }
-};
-
-const setStored = (analytics: boolean) => {
-  try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ analytics, ts: Date.now() })
-    );
-  } catch {
-    // ignore
-  }
-};
-
-const grantAnalyticsConsent = () => {
-  if (typeof window === "undefined" || !window.gtag) return;
-
-  window.gtag("consent", "update", {
-    ad_storage: "granted",
-    ad_user_data: "granted",
-    ad_personalization: "granted",
-    analytics_storage: "granted",
-  });
-};
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-}
+import { Button } from "@/components/ui/Button";
+import { getStored, setStored, grantAnalyticsConsent } from "@/lib/consent";
 
 export type TProps = {
   text?: React.ReactNode;
@@ -88,7 +43,7 @@ export const CookieBanner: FC<TProps> = ({
     <div
       role="dialog"
       aria-label="Cookie consent"
-      className="pointer-events-auto p-2 gap-2 rounded-lg bg-neutral-800 lg:p-0 lg:gap-0 lg:bg-transparent flex fixed w-[200px] lg:w-auto lg:relative bottom-6 lg:bottom-auto left-4 lg:left-auto right-4 lg:right-auto z-50"
+      className="pointer-events-auto p-2 gap-2 rounded-lg bg-neutral-800 lg:p-0 lg:gap-0 lg:bg-transparent flex fixed w-[200px] lg:w-auto lg:relative lg:mt-4 bottom-6 lg:bottom-auto left-4 lg:left-auto right-4 lg:right-auto z-50"
     >
       <p className="text-xs font-extralight text-neutral-300">{text}</p>
       <Button

@@ -1,24 +1,47 @@
 ---
+import { STORAGE_KEY } from "@/lib/consent";
+
 const gaId = "G-1B7Q55BVCM";
 const isProd = import.meta.env.PROD;
 ---
 
 {isProd && (
   <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-  <script define:vars={{ gaId }}>
-    document.addEventListener("astro:page-load", () => {
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function gtag() {
-        window.dataLayer.push(arguments);
-      };
-      window.gtag("js", new Date());
-      window.gtag("consent", "default", {
-        ad_storage: "denied",
-        ad_user_data: "denied",
-        ad_personalization: "denied",
-        analytics_storage: "denied",
-      });
-      window.gtag("config", gaId);
-    });
+  <script define:vars={{ gaId, storageKey: STORAGE_KEY }}>
+    function initGA() {
+      if (!window.gtag) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+
+        let granted = false;
+        try {
+          const raw = localStorage.getItem(storageKey);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            granted = Boolean(parsed?.analytics);
+          }
+        } catch {}
+
+        const isGranted = granted ? "granted" : "denied";
+
+        window.gtag("consent", "default", {
+          ad_storage: isGranted,
+          ad_user_data: isGranted,
+          ad_personalization: isGranted,
+          analytics_storage: isGranted,
+        });
+        window.gtag("config", gaId);
+      } else {
+        window.gtag("config", gaId, {
+          page_path: location.pathname + location.search,
+        });
+      }
+    }
+
+    initGA();
+    document.addEventListener("astro:page-load", initGA);
   </script>
 )}

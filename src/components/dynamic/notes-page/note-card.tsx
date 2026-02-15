@@ -1,5 +1,5 @@
 import { forwardRef, type ReactNode } from "react";
-import { Link } from "../common/link";
+import { Link } from "@/components/dynamic/common/link";
 
 type Props = {
   title: string;

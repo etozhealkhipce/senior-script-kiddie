@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import { ContentHeader } from "../common/content-header";
-import { Link } from "../common/link";
+import { ContentHeader } from "@/components/dynamic/common/content-header";
+import { Link } from "@/components/dynamic/common/link";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import type { StructuredContent } from "./types";

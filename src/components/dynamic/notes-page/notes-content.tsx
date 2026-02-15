@@ -1,5 +1,5 @@
 import { useRef, type FC } from "react";
-import { ContentHeader } from "../common/content-header";
+import { ContentHeader } from "@/components/dynamic/common/content-header";
 import { NoteCard } from "./note-card";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";

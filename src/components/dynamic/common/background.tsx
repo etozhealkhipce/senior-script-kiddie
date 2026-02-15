@@ -2,7 +2,7 @@ import { useState, useMemo, type FC } from "react";
 
 import getStroke from "perfect-freehand";
 import React from "react";
-import { getSvgPathFromStroke } from "../../../lib/get-svg-path-from-stroke";
+import { getSvgPathFromStroke } from "@/lib/get-svg-path-from-stroke";
 
 const DRAWING_CONFIG = {
   size: 7,

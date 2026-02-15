@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Link } from "../common/link";
+import { Link } from "@/components/dynamic/common/link";
 import type { StructuredContent, ParagraphElement, Paragraph } from "./types";
 
 type Props = {
