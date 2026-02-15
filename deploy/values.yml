@@ -4,8 +4,9 @@ app:
   ingress:
     enabled: true
     host: sskd.tech
-    port: 4321
-    replicas: 1
+    
+  port: 4321
+  replicas: 1
 
   envFrom:
     - secretRef:
