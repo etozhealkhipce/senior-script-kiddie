@@ -10,9 +10,6 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  ssr: {
-    noExternal: ["gsap"],
-  },
   prefetch: true,
   trailingSlash: "never",
   build: {

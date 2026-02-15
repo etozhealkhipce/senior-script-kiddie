@@ -1,13 +1,12 @@
 ---
-import { STORAGE_KEY } from "@/lib/consent";
-
 const gaId = "G-1B7Q55BVCM";
 const isProd = import.meta.env.PROD;
+const storageKey = "SSKD-portfolio:cc_consent";
 ---
 
 {isProd && (
   <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-  <script define:vars={{ gaId, storageKey: STORAGE_KEY }}>
+  <script define:vars={{ gaId, storageKey }}>
     function initGA() {
       if (!window.gtag) {
         window.dataLayer = window.dataLayer || [];

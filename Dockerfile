@@ -1,4 +1,4 @@
-FROM node:20-alpine as base
+FROM node:22-alpine as base
 
 ###################
 # DEPS
@@ -16,7 +16,7 @@ RUN yarn add esbuild@^0.25.0 --exact
 # BUILD
 ###################
 
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 WORKDIR /build
 
 ARG API_URL
