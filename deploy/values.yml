@@ -4,3 +4,9 @@ app:
   ingress:
     enabled: true
     host: sskd.tech
+    port: 4321
+    replicas: 1
+
+  envFrom:
+    - secretRef:
+        name: sskd-frontend-secrets

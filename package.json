@@ -12,20 +12,25 @@
     "format": "biome format --write ."
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.3",
     "@astrojs/react": "^4.3.0",
     "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/node-telegram-bot-api": "^0.64.13",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.11.0",
     "fontfaceobserver": "^2.3.0",
     "gsap": "^3.13.0",
+    "node-telegram-bot-api": "^0.67.0",
     "perfect-freehand": "^1.2.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "sharp": "^0.33.5",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.15"
+    "@biomejs/biome": "^2.3.15",
+    "@types/node": "^22.10.5"
   }
 }

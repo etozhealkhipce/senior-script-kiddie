@@ -32,16 +32,17 @@ RUN yarn build
 # FINAL
 ###################
 
-FROM nginx:1.29.0-alpine-slim AS final
-WORKDIR /final
+FROM node:22-alpine AS final
+WORKDIR /app
 
 ARG API_URL
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=4321
 ENV API_URL=$API_URL
 
-RUN apk update
-RUN apk add gettext
+COPY --from=build /build/dist ./dist
 
-COPY --from=build /build/dist ./
-COPY --from=build /build/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 4321
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "./dist/server/entry.mjs"]

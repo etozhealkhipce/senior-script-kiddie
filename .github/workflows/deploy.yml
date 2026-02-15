@@ -9,4 +9,5 @@ jobs:
     with:
       app_name: sskd-frontend
       app_host: sskd.tech
+      app_secrets: "TELEGRAM_BOT_TOKEN,TELEGRAM_CHANNEL_ID"
     secrets: inherit

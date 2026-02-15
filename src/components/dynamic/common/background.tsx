@@ -38,16 +38,33 @@ export const Background: FC = () => {
     setPoints((prev) => [...prev, [x, y, e.pressure]]);
   };
 
-  const handlePointerUp = (e: React.PointerEvent<SVGSVGElement>) => {
+  const handlePointerUp = async (e: React.PointerEvent<SVGSVGElement>) => {
     e.preventDefault();
 
     if (isDrawing && points.length > 1) {
       const allDrawings = [...savedDrawings, points];
-
       const newDrawings =
         allDrawings.length > MAX_SAVED_DRAWINGS ? allDrawings.slice(1) : allDrawings;
 
       setSavedDrawings(newDrawings);
+
+      try {
+        const stroke = getStroke(points, DRAWING_CONFIG);
+        const pathData = getSvgPathFromStroke(stroke);
+        const allPaths = [...savedPaths, pathData];
+
+        await fetch("/api/send-drawing", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            paths: allPaths,
+          }),
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     setPoints([]);
