@@ -7,6 +7,11 @@ app:
     enabled: true
     host: sskd.tech
 
+  env:
+    NODE_ENV: "production"
+    HOST: "0.0.0.0"
+    PORT: "4321"
+
   envFrom:
     - secretRef:
         name: sskd-frontend-secrets

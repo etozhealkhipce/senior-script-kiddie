@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/node": "^9.5.3",
+    "esbuild": "0.25.0",
     "@astrojs/react": "^4.3.0",
     "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.1.11",
