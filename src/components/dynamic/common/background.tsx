@@ -1,7 +1,5 @@
-import { useState, useMemo, type FC } from "react";
-
 import getStroke from "perfect-freehand";
-import React from "react";
+import React, { type FC, useMemo, useState } from "react";
 import { getSvgPathFromStroke } from "@/lib/get-svg-path-from-stroke";
 
 const DRAWING_CONFIG = {
@@ -14,9 +12,7 @@ const MAX_SAVED_DRAWINGS = 20;
 
 export const Background: FC = () => {
   const [points, setPoints] = useState<[number, number, number][]>([]);
-  const [savedDrawings, setSavedDrawings] = useState<
-    [number, number, number][][]
-  >([]);
+  const [savedDrawings, setSavedDrawings] = useState<[number, number, number][][]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
 
   const handlePointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -49,9 +45,7 @@ export const Background: FC = () => {
       const allDrawings = [...savedDrawings, points];
 
       const newDrawings =
-        allDrawings.length > MAX_SAVED_DRAWINGS
-          ? allDrawings.slice(1)
-          : allDrawings;
+        allDrawings.length > MAX_SAVED_DRAWINGS ? allDrawings.slice(1) : allDrawings;
 
       setSavedDrawings(newDrawings);
     }

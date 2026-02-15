@@ -19,10 +19,7 @@ export const getStored = (): TConsentState => {
 
 export const setStored = (analytics: boolean) => {
   try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ analytics, ts: Date.now() })
-    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ analytics, ts: Date.now() }));
   } catch {
     // ignore
   }

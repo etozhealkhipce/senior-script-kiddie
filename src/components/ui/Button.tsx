@@ -19,17 +19,7 @@ const VARIANT_CLASSES: Record<TButtonVariant, string> = {
 };
 
 export const Button = forwardRef<HTMLButtonElement, TProps>(
-  (
-    {
-      variant = "primary",
-      children,
-      className = "",
-      type = "button",
-      onClick,
-      disabled,
-    },
-    ref
-  ) => {
+  ({ variant = "primary", children, className = "", type = "button", onClick, disabled }, ref) => {
     return (
       <button
         ref={ref}
@@ -41,7 +31,7 @@ export const Button = forwardRef<HTMLButtonElement, TProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

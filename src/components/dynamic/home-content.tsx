@@ -1,8 +1,9 @@
-import { useRef } from "react";
-import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 import { SplitText } from "gsap/dist/SplitText";
+import { useRef } from "react";
 import { Link } from "./common/link";
+
 gsap.registerPlugin(SplitText);
 
 export const HomeContent = () => {
@@ -40,15 +41,10 @@ export const HomeContent = () => {
         </div>
         <div className="flex flex-col lg:ml-48" ref={linkRef}>
           <div className="flex flex-col items-start space-y-2">
-            <Link
-              href="/about"
-              className="font-secondary !text-3xl lg:!text-5xl font-medium !p-0"
-            >
+            <Link href="/about" className="font-secondary !text-3xl lg:!text-5xl font-medium !p-0">
               about me {">"}
             </Link>
-            <span className="text-secondary font-secondary text-sm">
-              little more info
-            </span>
+            <span className="text-secondary font-secondary text-sm">little more info</span>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
-import { useRef, type FC } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { type FC, useRef } from "react";
 
 type Props = {
   animate?: boolean;
@@ -13,12 +13,7 @@ export const LogoSVG: FC<Props> = ({ animate = false }) => {
   const pathRef4 = useRef<SVGPathElement>(null);
 
   useGSAP(() => {
-    if (
-      !pathRef.current ||
-      !pathRef2.current ||
-      !pathRef3.current ||
-      !pathRef4.current
-    ) {
+    if (!pathRef.current || !pathRef2.current || !pathRef3.current || !pathRef4.current) {
       return;
     }
 

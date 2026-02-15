@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { type FC, useEffect, useState } from "react";
 import { ALL_ROUTES } from "@/lib/available-routes";
 import { Link } from "./link";
 
@@ -20,16 +20,10 @@ export const Navigation: FC<Props> = ({ className = "", initialPath }) => {
     >
       {ALL_ROUTES.map((link) => {
         const isActive =
-          currentPath === link.href ||
-          (currentPath.includes(link.href) && link.href !== "/");
+          currentPath === link.href || (currentPath.includes(link.href) && link.href !== "/");
 
         return (
-          <Link
-            href={link.href}
-            isActive={isActive}
-            className="!py-0"
-            key={link.href}
-          >
+          <Link href={link.href} isActive={isActive} className="!py-0" key={link.href}>
             {link.label}
           </Link>
         );

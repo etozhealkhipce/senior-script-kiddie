@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Link } from "@/components/dynamic/common/link";
-import type { StructuredContent, ParagraphElement, Paragraph } from "./types";
+import type { Paragraph, ParagraphElement, StructuredContent } from "./types";
 
 type Props = {
   content: StructuredContent;
@@ -33,7 +33,7 @@ export const NoteParser: FC<Props> = ({ content }) => {
       {content.paragraphs.map((paragraph: Paragraph) => (
         <p key={paragraph.id}>
           {paragraph.elements.map((element: ParagraphElement, index: number) =>
-            renderParagraphElement(element, index)
+            renderParagraphElement(element, index),
           )}
         </p>
       ))}

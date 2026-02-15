@@ -1,6 +1,6 @@
-import { useState, useEffect, type FC } from "react";
+import { type FC, useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { getStored, setStored, grantAnalyticsConsent } from "@/lib/consent";
+import { getStored, grantAnalyticsConsent, setStored } from "@/lib/consent";
 
 export type TProps = {
   text?: React.ReactNode;

@@ -1,10 +1,10 @@
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 import { useRef } from "react";
 import { ContentHeader } from "@/components/dynamic/common/content-header";
 import { Link } from "@/components/dynamic/common/link";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import type { StructuredContent } from "./types";
 import { NoteParser } from "./note-parser";
+import type { StructuredContent } from "./types";
 
 type Props = {
   title: string;
@@ -56,7 +56,7 @@ export const NoteContent = ({ title, content, date, tags }: Props) => {
         duration: 0.5,
         ease: "power2.out",
       },
-      ">-0.2"
+      ">-0.2",
     );
 
     // 4. Back link
@@ -68,21 +68,14 @@ export const NoteContent = ({ title, content, date, tags }: Props) => {
         duration: 0.5,
         ease: "power2.out",
       },
-      ">-0.1"
+      ">-0.1",
     );
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="space-y-8 max-w-full lg:max-w-2xl opacity-0"
-    >
+    <div ref={containerRef} className="space-y-8 max-w-full lg:max-w-2xl opacity-0">
       <div className="mb-4">
-        <Link
-          ref={backLinkRef}
-          href={`/notes`}
-          className="underline underline-offset-2 !text-base"
-        >
+        <Link ref={backLinkRef} href={`/notes`} className="underline underline-offset-2 !text-base">
           {"<"} back to notes
         </Link>
       </div>
@@ -94,10 +87,7 @@ export const NoteContent = ({ title, content, date, tags }: Props) => {
       {tags && tags.length > 0 && (
         <div ref={tagsRef} className="flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-2 py-1 text-xs bg-accent/20 text-white rounded"
-            >
+            <span key={tag} className="px-2 py-1 text-xs bg-accent/20 text-white rounded">
               {tag}
             </span>
           ))}

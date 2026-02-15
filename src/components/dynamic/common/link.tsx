@@ -23,5 +23,5 @@ export const Link = forwardRef<HTMLAnchorElement, Props>(
         {children}
       </a>
     );
-  }
+  },
 );

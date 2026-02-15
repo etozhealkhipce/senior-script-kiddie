@@ -1,6 +1,6 @@
-import { useEffect, useState, type FC } from "react";
 // @ts-expect-error: no types for fontfaceobserver
 import FontFaceObserver from "fontfaceobserver";
+import { type FC, useEffect, useState } from "react";
 import { LogoSVG } from "./logo-svg";
 
 const FONT_TIMEOUT = 4000; // ms
@@ -13,13 +13,9 @@ export const Preloader: FC = () => {
   // Font loading logic
   useEffect(() => {
     let cancelled = false;
-    const minShowPromise = new Promise((resolve) =>
-      setTimeout(resolve, MIN_SHOW_TIME)
-    );
+    const minShowPromise = new Promise((resolve) => setTimeout(resolve, MIN_SHOW_TIME));
     const fontPromise = Promise.all(
-      FONT_FAMILIES.map((family) =>
-        new FontFaceObserver(family).load(null, FONT_TIMEOUT)
-      )
+      FONT_FAMILIES.map((family) => new FontFaceObserver(family).load(null, FONT_TIMEOUT)),
     );
     Promise.race([
       Promise.all([minShowPromise, fontPromise]),

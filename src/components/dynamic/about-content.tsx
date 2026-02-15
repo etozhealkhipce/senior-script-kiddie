@@ -1,6 +1,6 @@
-import { useRef, type FC } from "react";
-import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { type FC, useRef } from "react";
 import { ContentHeader } from "./common/content-header";
 import { Link } from "./common/link";
 
@@ -51,7 +51,7 @@ export const AboutContent: FC = () => {
         stagger: 0.1,
         ease: "back.out(1.7)",
       },
-      ">-0.2"
+      ">-0.2",
     );
   }, []);
 
@@ -68,30 +68,21 @@ export const AboutContent: FC = () => {
 
   return (
     <>
-      <div
-        ref={containerRef}
-        className="space-y-8 max-w-full lg:max-w-xl opacity-0"
-      >
+      <div ref={containerRef} className="space-y-8 max-w-full lg:max-w-xl opacity-0">
         <div className="flex flex-col" ref={headerRef}>
           <ContentHeader title="about me" subtitle="and my expirience" />
         </div>
         <div className="flex flex-col space-y-4 font-light">
           <p>
             <span ref={addToTextRefs}>My name is </span>
-            <span
-              ref={addToHighlightRefs}
-              className="bg-accent/30 text-white px-1 rounded"
-            >
+            <span ref={addToHighlightRefs} className="bg-accent/30 text-white px-1 rounded">
               Ilya
             </span>
             <span ref={addToTextRefs}>.</span>
           </p>
           <p>
             <span ref={addToTextRefs}>I'm a </span>
-            <span
-              ref={addToHighlightRefs}
-              className="bg-accent/30 text-white px-1 rounded"
-            >
+            <span ref={addToHighlightRefs} className="bg-accent/30 text-white px-1 rounded">
               frontend developer
             </span>
             <span ref={addToTextRefs}> with over </span>
@@ -102,10 +93,9 @@ export const AboutContent: FC = () => {
               6 years of commercial experience
             </span>
             <span ref={addToTextRefs}>
-              . In addition to coding, I have experience leading teams and
-              setting up processes. I've been involved in designing
-              architecture, making technical decisions, and helping my team
-              grow.
+              . In addition to coding, I have experience leading teams and setting up processes.
+              I've been involved in designing architecture, making technical decisions, and helping
+              my team grow.
             </span>
           </p>
           <p ref={addToTextRefs}>
@@ -115,6 +105,7 @@ export const AboutContent: FC = () => {
                 href="https://react.dev"
                 target="_blank"
                 className="hover:underline transition-all duration-300 hover:text-accent"
+                rel="noopener"
               >
                 React
               </a>
@@ -123,6 +114,7 @@ export const AboutContent: FC = () => {
                 href="https://nextjs.org"
                 target="_blank"
                 className="hover:underline transition-all duration-300 hover:text-accent"
+                rel="noopener"
               >
                 Next.js
               </a>
@@ -131,6 +123,7 @@ export const AboutContent: FC = () => {
                 href="https://effector.dev"
                 target="_blank"
                 className="hover:underline transition-all duration-300 hover:text-accent"
+                rel="noopener"
               >
                 Effector
               </a>
@@ -139,6 +132,7 @@ export const AboutContent: FC = () => {
                 href="https://ui.shadcn.com"
                 target="_blank"
                 className="hover:underline transition-all duration-300 hover:text-accent"
+                rel="noopener"
               >
                 shadcn/ui
               </a>
@@ -147,13 +141,14 @@ export const AboutContent: FC = () => {
                 href="https://tailwindcss.com"
                 target="_blank"
                 className="hover:underline transition-all duration-300 hover:text-accent"
+                rel="noopener"
               >
                 Tailwind CSS
               </a>
             </span>
             <span ref={addToTextRefs}>
-              . I've also worked with many other technologies and am always open
-              to learning new tools.
+              . I've also worked with many other technologies and am always open to learning new
+              tools.
             </span>
           </p>
         </div>

@@ -1,8 +1,8 @@
-import { useRef, type FC } from "react";
-import { ContentHeader } from "@/components/dynamic/common/content-header";
-import { ProjectCard } from "./project-card";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
+import { type FC, useRef } from "react";
+import { ContentHeader } from "@/components/dynamic/common/content-header";
+import { ProjectCard } from "./project-card";
 
 export const WorkContent: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,10 +43,7 @@ export const WorkContent: FC = () => {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="space-y-8 max-w-full lg:max-w-xl opacity-0"
-    >
+    <div ref={containerRef} className="space-y-8 max-w-full lg:max-w-xl opacity-0">
       <div className="flex flex-col" ref={headerRef}>
         <ContentHeader title="work" subtitle="team and personal projects" />
       </div>

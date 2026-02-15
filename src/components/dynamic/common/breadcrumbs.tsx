@@ -1,4 +1,4 @@
-import { useState, useEffect, type FC } from "react";
+import { type FC, useEffect, useState } from "react";
 import { ALL_ROUTES } from "@/lib/available-routes";
 import { Link } from "./link";
 
@@ -14,9 +14,7 @@ export const Breadcrumbs: FC<Props> = ({ className = "", initialPath }) => {
     setCurrentPath(window.location.pathname);
   }, []);
 
-  const pathSegments = currentPath
-    .split("/")
-    .filter((segment) => segment !== "");
+  const pathSegments = currentPath.split("/").filter((segment) => segment !== "");
 
   const breadcrumbItems = pathSegments.map((segment, index) => {
     const href = "/" + pathSegments.slice(0, index + 1).join("/");
@@ -72,9 +70,7 @@ export const Breadcrumbs: FC<Props> = ({ className = "", initialPath }) => {
                 ) : (
                   <Link
                     href={item.href}
-                    isActive={
-                      currentPath.includes(item.href) && item.href !== "/"
-                    }
+                    isActive={currentPath.includes(item.href) && item.href !== "/"}
                   >
                     {item.label}
                   </Link>
