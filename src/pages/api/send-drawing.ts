@@ -4,8 +4,10 @@ import sharp from "sharp";
 
 export const prerender = false;
 
-const TELEGRAM_BOT_TOKEN = import.meta.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHANNEL_ID = import.meta.env.TELEGRAM_CHANNEL_ID;
+// Fallback pattern for dev/prod compatibility (recommended by Astro docs)
+// Dev: import.meta.env (from .env files) | Prod: process.env (from K8s secrets)
+const TELEGRAM_BOT_TOKEN = import.meta.env.TELEGRAM_BOT_TOKEN ?? process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHANNEL_ID = import.meta.env.TELEGRAM_CHANNEL_ID ?? process.env.TELEGRAM_CHANNEL_ID;
 const SVG_WIDTH = 1920;
 const SVG_HEIGHT = 1080;
 
