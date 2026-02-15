@@ -29,6 +29,17 @@ COPY . .
 RUN yarn build
 
 ###################
+# PROD DEPS
+###################
+
+FROM base AS prod-deps
+WORKDIR /prod-deps
+
+COPY package.json yarn.lock ./
+
+RUN yarn install --production --frozen-lockfile
+
+###################
 # FINAL
 ###################
 
@@ -41,6 +52,7 @@ ENV HOST=0.0.0.0
 ENV PORT=4321
 ENV API_URL=$API_URL
 
+COPY --from=prod-deps /prod-deps/node_modules ./node_modules
 COPY --from=build /build/dist ./dist
 
 EXPOSE 4321
