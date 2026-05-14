@@ -1,5 +1,5 @@
 import getStroke from "perfect-freehand";
-import React, { type FC, useMemo, useState } from "react";
+import React, { type FC, useMemo, useRef, useState } from "react";
 import { getSvgPathFromStroke } from "@/lib/get-svg-path-from-stroke";
 
 const DRAWING_CONFIG = {
@@ -9,11 +9,67 @@ const DRAWING_CONFIG = {
   streamline: 0.5,
 };
 const MAX_SAVED_DRAWINGS = 20;
+const SEND_DEBOUNCE_MS = 2000;
+
+function collectUserInfo() {
+  const nav = navigator as Navigator & {
+    connection?: { effectiveType?: string; downlink?: number };
+    deviceMemory?: number;
+  };
+  return {
+    userAgent: nav.userAgent,
+    language: nav.language,
+    languages: nav.languages?.join(", "),
+    platform: nav.platform,
+    hardwareConcurrency: nav.hardwareConcurrency,
+    deviceMemory: nav.deviceMemory,
+    maxTouchPoints: nav.maxTouchPoints,
+    connectionType: nav.connection?.effectiveType,
+    connectionDownlink: nav.connection?.downlink,
+    screenResolution: `${screen.width}x${screen.height}`,
+    viewportSize: `${window.innerWidth}x${window.innerHeight}`,
+    devicePixelRatio: window.devicePixelRatio,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    timezoneOffset: new Date().getTimezoneOffset(),
+    referrer: document.referrer || null,
+    url: window.location.href,
+    colorDepth: screen.colorDepth,
+    cookiesEnabled: nav.cookieEnabled,
+  };
+}
 
 export const Background: FC = () => {
   const [points, setPoints] = useState<[number, number, number][]>([]);
   const [savedDrawings, setSavedDrawings] = useState<[number, number, number][][]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingPathsRef = useRef<string[]>([]);
+
+  const scheduleSend = (paths: string[]) => {
+    pendingPathsRef.current = paths;
+
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(async () => {
+      const snapshot = pendingPathsRef.current;
+      if (snapshot.length === 0) return;
+
+      try {
+        await fetch("/api/send-drawing", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            paths: snapshot,
+            userInfo: collectUserInfo(),
+          }),
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }, SEND_DEBOUNCE_MS);
+  };
 
   const handlePointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     e.preventDefault();
@@ -38,7 +94,7 @@ export const Background: FC = () => {
     setPoints((prev) => [...prev, [x, y, e.pressure]]);
   };
 
-  const handlePointerUp = async (e: React.PointerEvent<SVGSVGElement>) => {
+  const handlePointerUp = (e: React.PointerEvent<SVGSVGElement>) => {
     e.preventDefault();
 
     if (isDrawing && points.length > 1) {
@@ -48,23 +104,11 @@ export const Background: FC = () => {
 
       setSavedDrawings(newDrawings);
 
-      try {
-        const stroke = getStroke(points, DRAWING_CONFIG);
-        const pathData = getSvgPathFromStroke(stroke);
-        const allPaths = [...savedPaths, pathData];
+      const stroke = getStroke(points, DRAWING_CONFIG);
+      const pathData = getSvgPathFromStroke(stroke);
+      const allPaths = [...savedPaths, pathData];
 
-        await fetch("/api/send-drawing", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            paths: allPaths,
-          }),
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      scheduleSend(allPaths);
     }
 
     setPoints([]);
