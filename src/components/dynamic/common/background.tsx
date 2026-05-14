@@ -9,7 +9,7 @@ const DRAWING_CONFIG = {
   streamline: 0.5,
 };
 const MAX_SAVED_DRAWINGS = 20;
-const SEND_DEBOUNCE_MS = 2000;
+const SEND_DEBOUNCE_MS = 5000;
 
 function collectUserInfo() {
   const nav = navigator as Navigator & {

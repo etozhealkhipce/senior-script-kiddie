@@ -2,6 +2,8 @@
 import { NoteContent } from "@/components/dynamic/notes-page/note-content";
 import Layout from "@/layouts/layout.astro";
 
+export const prerender = true;
+
 export function getStaticPaths() {
   return [
     {
