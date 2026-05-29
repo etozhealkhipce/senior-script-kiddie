@@ -1,7 +1,7 @@
 import { $fetch, FetchError } from "ofetch";
 import type { NoteApiData } from "@/components/dynamic/notes-page/types";
 
-const baseURL = process.env.API_URL ?? "http://localhost:3000";
+const baseURL = process.env.API_URL ?? import.meta.env.API_URL;
 
 export const api = $fetch.create({ baseURL });
 
