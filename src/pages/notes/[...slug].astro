@@ -5,7 +5,7 @@ import Layout from "@/layouts/layout.astro";
 import { formatDate } from "@/lib/format-date";
 import { resolveUploads } from "@/lib/resolve-uploads";
 
-const API_URL = import.meta.env.API_URL ?? "http://localhost:3000";
+const API_URL = process.env.API_URL ?? "http://localhost:3000";
 
 const { slug } = Astro.params;
 
