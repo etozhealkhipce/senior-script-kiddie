@@ -43,6 +43,19 @@
           }
         }
       }
+    },
+    {
+      "includes": ["**/editorjs-renderer.tsx"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noDangerouslySetInnerHtml": "off"
+          },
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
+        }
+      }
     }
   ]
 }

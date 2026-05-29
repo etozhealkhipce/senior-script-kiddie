@@ -1,129 +1,65 @@
 ---
 import { NoteContent } from "@/components/dynamic/notes-page/note-content";
+import type { NoteApiData } from "@/components/dynamic/notes-page/types";
 import Layout from "@/layouts/layout.astro";
-import type { StructuredContent } from "@/components/dynamic/notes-page/types";
+import { formatDate } from "@/lib/format-date";
+import { resolveUploads } from "@/lib/resolve-uploads";
 
-type NoteData = {
-  title: string;
-  content: StructuredContent;
-  date: string;
-  tags: string[];
-};
-
-const NOTES: Record<string, NoteData> = {
-  "effector-useful-links": {
-    title: "effector useful links",
-    content: {
-      paragraphs: [
-        {
-          id: "intro",
-          elements: [
-            {
-              type: "text",
-              content:
-                "Effector — мощный инструмент для управления состоянием приложений позволяющий отделить бизнес логику от рендера",
-            },
-          ],
-        },
-        {
-          id: "link1",
-          elements: [
-            { type: "link", url: "https://effector.dev/", external: true },
-            { type: "text", content: " — официальная дока (там актуальные линки на нейродоки)" },
-          ],
-        },
-        {
-          id: "link2",
-          elements: [
-            { type: "link", url: "https://patronum.effector.dev/", external: true },
-            { type: "text", content: " — хелперы для упрощения жизни" },
-          ],
-        },
-        {
-          id: "link3",
-          elements: [
-            { type: "link", url: "https://withease.effector.dev/", external: true },
-            { type: "text", content: " — набор классных библиотек" },
-          ],
-        },
-        {
-          id: "link4",
-          elements: [
-            { type: "link", url: "https://github.com/russia-consulate/webapp/tree/main", external: true },
-            { type: "text", content: " — проект с хорошим конфигом" },
-          ],
-        },
-        {
-          id: "link5",
-          elements: [
-            { type: "link", url: "https://github.com/etozhealkhipce/spa-front-starter", external: true },
-            { type: "text", content: " — мой стартер проект для гитхаба (на основе проекта выше)" },
-          ],
-        },
-        {
-          id: "link6",
-          elements: [
-            { type: "link", url: "https://github.com/Kelin2025/effector-factorio", external: true },
-            { type: "text", content: " — крутой проект для переиспользования model + ui" },
-          ],
-        },
-        {
-          id: "link7",
-          elements: [
-            { type: "link", url: "https://github.com/yumauri/effector-storage", external: true },
-            { type: "text", content: " — синхронизация сторов с внешними хранилищами (ls, query)" },
-          ],
-        },
-        {
-          id: "link8",
-          elements: [
-            { type: "link", url: "https://atomic-router.github.io/", external: true },
-            { type: "text", content: " — роутер с поддержкой effector" },
-          ],
-        },
-        {
-          id: "link9",
-          elements: [
-            { type: "link", url: "https://github.com/AlexeyDuybo/effector-action", external: true },
-            { type: "text", content: " — управление событиями в императивном стиле" },
-          ],
-        },
-        {
-          id: "link10",
-          elements: [
-            { type: "link", url: "https://eslint.effector.dev/", external: true },
-            { type: "text", content: " — eslint плагины" },
-          ],
-        },
-        {
-          id: "link11",
-          elements: [
-            { type: "link", url: "https://github.com/effector/next", external: true },
-            { type: "text", content: " — адаптер для next.js" },
-          ],
-        },
-      ],
-    },
-    date: "22.08.2025",
-    tags: ["effector", "links"],
-  },
-};
+const API_URL = import.meta.env.API_URL ?? "http://localhost:3000";
 
 const { slug } = Astro.params;
-const note = slug ? NOTES[slug] : undefined;
+
+if (!slug) {
+  return Astro.redirect("/404");
+}
+
+let note: NoteApiData | null = null;
+try {
+  const res = await fetch(`${API_URL}/notes/${slug}`);
+  if (res.status === 404) {
+    return Astro.redirect("/404");
+  }
+  if (res.ok) {
+    note = await res.json();
+  }
+} catch (e) {
+  console.error(`[notes/${slug}] Failed to fetch note:`, e);
+  return Astro.redirect("/404");
+}
 
 if (!note) {
   return Astro.redirect("/404");
 }
 
-const { title, content, date, tags } = note;
+const { title, content, tags, createdAt, preview } = note;
+const resolvedContent = resolveUploads(content, API_URL);
+const date = formatDate(createdAt);
+
+// JSON-LD for blog post structured data
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: preview,
+  author: { "@type": "Person", name: "Ilya Dyomin" },
+  datePublished: createdAt,
+  keywords: tags?.join(", ") ?? "",
+  url: Astro.url.href,
+});
 ---
 
-<Layout title={title}>
+<Layout
+  title={title}
+  description={preview}
+  ogType="article"
+  keywords={tags ?? []}
+  publishedAt={createdAt}
+>
+  <script type="application/ld+json" set:html={jsonLd} slot="head" />
   <NoteContent
     client:load
     title={title}
-    content={content}
+    content={resolvedContent}
     date={date}
     tags={tags}
   />

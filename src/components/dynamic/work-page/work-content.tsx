@@ -2,9 +2,14 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { type FC, useRef } from "react";
 import { ContentHeader } from "@/components/dynamic/common/content-header";
+import type { NoteApiData } from "@/components/dynamic/notes-page/types";
 import { ProjectCard } from "./project-card";
 
-export const WorkContent: FC = () => {
+type Props = {
+  projects: NoteApiData[];
+};
+
+export const WorkContent: FC<Props> = ({ projects }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement[]>([]);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -42,6 +47,23 @@ export const WorkContent: FC = () => {
     }
   };
 
+  const buildSubtitle = (project: NoteApiData) => {
+    const items = project.subtitle?.length
+      ? project.subtitle
+      : (project.tags ?? []).map((t) => ({ title: t, highlight: false }));
+
+    return items.map((item, index) => (
+      <span key={item.title}>
+        {item.highlight ? (
+          <span className="bg-accent/30 text-white">{item.title}</span>
+        ) : (
+          item.title
+        )}
+        {index !== items.length - 1 && ", "}
+      </span>
+    ));
+  };
+
   return (
     <div ref={containerRef} className="space-y-8 max-w-full lg:max-w-xl opacity-0">
       <div className="flex flex-col" ref={headerRef}>
@@ -49,82 +71,17 @@ export const WorkContent: FC = () => {
       </div>
 
       <div className="flex flex-col space-y-4 font-light">
-        {[
-          {
-            title: "Block Forge",
-            subtitle: [
-              {
-                title: "typescript",
-                highlight: false,
-              },
-              {
-                title: "react",
-                highlight: false,
-              },
-              {
-                title: "editorjs",
-                highlight: false,
-              },
-              {
-                title: "open source",
-                highlight: true,
-              },
-            ],
-            description:
-              "A powerful article builder for React based on EditorJS and built with shadcn/ui and Tailwind CSS. Create beautiful, structured content with a modern block-based editor.",
-            link: "https://github.com/block-forge-editor/block-forge-editor",
-            target: "_blank" as const,
-            linkText: "view project >",
-          },
-          {
-            title: "Finansly",
-            subtitle: [
-              {
-                title: "react",
-                highlight: false,
-              },
-              {
-                title: "typescript",
-                highlight: false,
-              },
-              {
-                title: "effector",
-                highlight: false,
-              },
-              {
-                title: "golang",
-                highlight: false,
-              },
-              {
-                title: "team project",
-                highlight: true,
-              },
-              {
-                title: "wip",
-                highlight: true,
-              },
-            ],
-            description:
-              "A mobile-focused web budget app that helps users track income, expenses, and savings with real-time insights and simple visual summaries.",
-            link: "https://finansly.space/",
-            target: "_blank" as const,
-            linkText: "website link >",
-          },
-        ].map((project) => (
+        {projects.length === 0 && <p className="text-neutral-500 text-sm">No projects yet.</p>}
+        {projects.map((project) => (
           <ProjectCard
             ref={addToProjectsRefs}
-            key={project.title}
-            {...project}
-            subtitle={project.subtitle?.map((item, index) => (
-              <span key={item.title}>
-                {item.highlight ? (
-                  <span className="bg-accent/30 text-white">{item.title}</span>
-                ) : (
-                  item.title
-                )}
-                {index !== project.subtitle.length - 1 && ", "}
-              </span>
-            ))}
+            key={project.slug}
+            title={project.title}
+            subtitle={buildSubtitle(project)}
+            description={project.preview}
+            link={project.link ?? ""}
+            linkText={project.linkText ?? "view project >"}
+            target="_blank"
           />
         ))}
       </div>

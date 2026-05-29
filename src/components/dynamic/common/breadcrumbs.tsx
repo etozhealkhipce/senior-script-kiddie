@@ -17,7 +17,7 @@ export const Breadcrumbs: FC<Props> = ({ className = "", initialPath }) => {
   const pathSegments = currentPath.split("/").filter((segment) => segment !== "");
 
   const breadcrumbItems = pathSegments.map((segment, index) => {
-    const href = "/" + pathSegments.slice(0, index + 1).join("/");
+    const href = `/${pathSegments.slice(0, index + 1).join("/")}`;
     const label = segment === "" ? "index" : segment;
     const isLast = index === pathSegments.length - 1;
 

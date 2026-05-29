@@ -1,8 +1,25 @@
 ---
+import type { NoteApiData } from "@/components/dynamic/notes-page/types";
 import { WorkContent } from "@/components/dynamic/work-page/work-content";
 import Layout from "@/layouts/layout.astro";
+
+const API_URL = import.meta.env.API_URL ?? "http://localhost:3000";
+
+let projects: NoteApiData[] = [];
+try {
+  const res = await fetch(`${API_URL}/notes?type=work`);
+  if (res.ok) {
+    projects = await res.json();
+  }
+} catch (e) {
+  console.error("[work] Failed to fetch projects:", e);
+}
 ---
 
-<Layout>
-  <WorkContent client:load />
+<Layout
+  title="work"
+  description="Team and personal projects by Ilya Dyomin — web apps, open source, and more."
+  keywords={["projects", "work", "web development", "open source", "Ilya Dyomin"]}
+>
+  <WorkContent client:load projects={projects} />
 </Layout>

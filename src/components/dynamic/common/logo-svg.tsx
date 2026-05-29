@@ -70,6 +70,7 @@ export const LogoSVG: FC<Props> = ({ animate = false }) => {
       height="auto"
       className="w-full h-auto"
     >
+      <title>Ilya Dyomin</title>
       <g
         transform="translate(61.42857142857156 215.71428571428578) rotate(0 118.57142857142844 -50.000000000000114)"
         stroke="none"

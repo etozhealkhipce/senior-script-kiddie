@@ -2,6 +2,7 @@
 
 import node from "@astrojs/node";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
@@ -11,9 +12,13 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
-  integrations: [react()],
+  site: "https://sskd.tech",
+  integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ["gsap", "@gsap/react"],
+    },
   },
   prefetch: true,
   trailingSlash: "never",

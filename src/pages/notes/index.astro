@@ -1,8 +1,25 @@
 ---
 import { NotesContent } from "@/components/dynamic/notes-page/notes-content";
+import type { NoteApiData } from "@/components/dynamic/notes-page/types";
 import Layout from "@/layouts/layout.astro";
+
+const API_URL = import.meta.env.API_URL ?? "http://localhost:3000";
+
+let notes: NoteApiData[] = [];
+try {
+  const res = await fetch(`${API_URL}/notes?type=note`);
+  if (res.ok) {
+    notes = await res.json();
+  }
+} catch (e) {
+  console.error("[notes/index] Failed to fetch notes:", e);
+}
 ---
 
-<Layout>
-  <NotesContent client:load />
+<Layout
+  title="notes"
+  description="Notes by Ilya Dyomin — dev tips, travel stories, life hacks, and thoughts on software and beyond."
+  keywords={["notes", "blog", "development", "travel", "life", "Ilya Dyomin"]}
+>
+  <NotesContent client:load notes={notes} />
 </Layout>

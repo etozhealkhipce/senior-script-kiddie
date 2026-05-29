@@ -3,14 +3,14 @@ import { gsap } from "gsap";
 import { useRef } from "react";
 import { ContentHeader } from "@/components/dynamic/common/content-header";
 import { Link } from "@/components/dynamic/common/link";
-import { NoteParser } from "./note-parser";
-import type { StructuredContent } from "./types";
+import { EditorJsRenderer } from "./editorjs-renderer";
+import type { EditorData } from "./types";
 
 type Props = {
   title: string;
-  content: StructuredContent;
+  content: EditorData | null;
   date: string;
-  tags?: string[];
+  tags?: string[] | null;
 };
 
 export const NoteContent = ({ title, content, date, tags }: Props) => {
@@ -98,7 +98,11 @@ export const NoteContent = ({ title, content, date, tags }: Props) => {
         ref={contentRef}
         className="prose prose-invert prose-sm max-w-none font-light leading-relaxed"
       >
-        <NoteParser content={content} />
+        {content ? (
+          <EditorJsRenderer content={content} />
+        ) : (
+          <p className="text-neutral-500">No content yet.</p>
+        )}
       </div>
     </div>
   );

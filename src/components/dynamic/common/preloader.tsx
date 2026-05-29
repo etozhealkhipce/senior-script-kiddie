@@ -11,6 +11,7 @@ export const Preloader: FC = () => {
   const [visible, setVisible] = useState(true);
 
   // Font loading logic
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional run-once on mount
   useEffect(() => {
     let cancelled = false;
     const minShowPromise = new Promise((resolve) => setTimeout(resolve, MIN_SHOW_TIME));

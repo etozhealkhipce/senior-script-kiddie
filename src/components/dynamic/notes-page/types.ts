@@ -1,22 +1,32 @@
-export type TextElement = {
-  type: "text";
-  content: string;
-};
+export interface EditorBlock {
+  id?: string;
+  type: string;
+  data: Record<string, unknown>;
+}
 
-export type LinkElement = {
-  type: "link";
-  url: string;
-  text?: string;
-  external?: boolean;
-};
+export interface EditorData {
+  time?: number;
+  blocks: EditorBlock[];
+  version?: string;
+  meta?: Record<string, unknown>;
+}
 
-export type ParagraphElement = TextElement | LinkElement;
+export interface SubtitleItem {
+  title: string;
+  highlight: boolean;
+}
 
-export type Paragraph = {
-  id: string;
-  elements: ParagraphElement[];
-};
-
-export type StructuredContent = {
-  paragraphs: Paragraph[];
-};
+export interface NoteApiData {
+  id: number;
+  slug: string;
+  contentType: string;
+  title: string;
+  preview: string;
+  content: EditorData | null;
+  subtitle: SubtitleItem[] | null;
+  tags: string[] | null;
+  link: string | null;
+  linkText: string | null;
+  createdAt: string;
+  updatedAt: string;
+}

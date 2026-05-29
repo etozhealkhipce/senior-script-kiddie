@@ -135,12 +135,14 @@ export const Background: FC = () => {
       <div className="fixed inset-0 w-full h-screen pointer-events-none mix-blend-multiply bg-[url(https://static.tumblr.com/rxfwyqf/20Zlzzth8/noise.png)] opacity-15"></div>
 
       <svg
+        aria-hidden="true"
         className="hidden lg:block fixed inset-0 w-full h-screen pointer-events-auto text-accent stroke-accent fill-accent touch-none"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
       >
         {savedPaths.map((pathData, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: drawing paths have no stable IDs
           <path key={`saved-${index}`} d={pathData} />
         ))}
 

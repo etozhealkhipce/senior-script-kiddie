@@ -28,10 +28,20 @@ function formatCaption(userInfo: Record<string, unknown>, ip: string): string {
   if (userInfo.url) lines.push(`🔗 URL: ${userInfo.url}`);
   if (userInfo.referrer) lines.push(`↩️ Referrer: ${userInfo.referrer}`);
 
-  if (userInfo.timezone) lines.push(`⏰ TZ: ${userInfo.timezone} (UTC${userInfo.timezoneOffset != null ? ` ${Number(userInfo.timezoneOffset) > 0 ? "-" : "+"}${Math.abs(Number(userInfo.timezoneOffset)) / 60}` : ""})`);
-  if (userInfo.language) lines.push(`🗣 Lang: ${userInfo.language}${userInfo.languages ? ` (${userInfo.languages})` : ""}`);
+  if (userInfo.timezone)
+    lines.push(
+      `⏰ TZ: ${userInfo.timezone} (UTC${userInfo.timezoneOffset != null ? ` ${Number(userInfo.timezoneOffset) > 0 ? "-" : "+"}${Math.abs(Number(userInfo.timezoneOffset)) / 60}` : ""})`,
+    );
+  if (userInfo.language)
+    lines.push(
+      `🗣 Lang: ${userInfo.language}${userInfo.languages ? ` (${userInfo.languages})` : ""}`,
+    );
 
-  const screenInfo = [userInfo.screenResolution, userInfo.viewportSize ? `viewport ${userInfo.viewportSize}` : null, userInfo.devicePixelRatio ? `@${userInfo.devicePixelRatio}x` : null]
+  const screenInfo = [
+    userInfo.screenResolution,
+    userInfo.viewportSize ? `viewport ${userInfo.viewportSize}` : null,
+    userInfo.devicePixelRatio ? `@${userInfo.devicePixelRatio}x` : null,
+  ]
     .filter(Boolean)
     .join(", ");
   if (screenInfo) lines.push(`🖥 Screen: ${screenInfo}`);
@@ -46,7 +56,10 @@ function formatCaption(userInfo: Record<string, unknown>, ip: string): string {
   if (hwInfo) lines.push(`💻 HW: ${hwInfo}`);
 
   if (userInfo.connectionType) {
-    const conn = [userInfo.connectionType, userInfo.connectionDownlink ? `${userInfo.connectionDownlink}Mbps` : null]
+    const conn = [
+      userInfo.connectionType,
+      userInfo.connectionDownlink ? `${userInfo.connectionDownlink}Mbps` : null,
+    ]
       .filter(Boolean)
       .join(" ");
     lines.push(`📶 Net: ${conn}`);

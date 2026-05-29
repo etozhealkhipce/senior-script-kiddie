@@ -2,9 +2,15 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { type FC, useRef } from "react";
 import { ContentHeader } from "@/components/dynamic/common/content-header";
+import { formatDate } from "@/lib/format-date";
 import { NoteCard } from "./note-card";
+import type { NoteApiData } from "./types";
 
-export const NotesContent: FC = () => {
+type TProps = {
+  notes: NoteApiData[];
+};
+
+export const NotesContent: FC<TProps> = ({ notes }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const notesRef = useRef<HTMLDivElement[]>([]);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -49,40 +55,35 @@ export const NotesContent: FC = () => {
       </div>
 
       <div className="flex flex-col space-y-4 font-light">
-        {[
-          {
-            title: "effector useful links",
-            subtitle: [
-              {
-                title: "effector",
-                highlight: false,
-              },
-              {
-                title: "links",
-                highlight: true,
-              },
-            ],
-            description: "полезные ссылки для работы с effector",
-            date: "22.08.2025",
-            slug: "effector-useful-links",
-          },
-        ].map((note) => (
-          <NoteCard
-            ref={addToNotesRefs}
-            key={note.title}
-            {...note}
-            subtitle={note.subtitle?.map((item, index) => (
-              <span key={item.title}>
-                {item.highlight ? (
-                  <span className="bg-accent/30 text-white">{item.title}</span>
-                ) : (
-                  item.title
-                )}
-                {index !== note.subtitle.length - 1 && ", "}
-              </span>
-            ))}
-          />
-        ))}
+        {notes.length === 0 && <p className="text-neutral-500 text-sm">No notes yet.</p>}
+        {notes.map((note) => {
+          const subtitleItems = note.subtitle?.length
+            ? note.subtitle
+            : (note.tags ?? []).map((t) => ({ title: t, highlight: false }));
+
+          const subtitleNode = subtitleItems.map((item, index) => (
+            <span key={item.title}>
+              {item.highlight ? (
+                <span className="bg-accent/30 text-white">{item.title}</span>
+              ) : (
+                item.title
+              )}
+              {index !== subtitleItems.length - 1 && ", "}
+            </span>
+          ));
+
+          return (
+            <NoteCard
+              ref={addToNotesRefs}
+              key={note.slug}
+              title={note.title}
+              subtitle={subtitleNode}
+              description={note.preview}
+              date={formatDate(note.createdAt)}
+              slug={note.slug}
+            />
+          );
+        })}
       </div>
     </div>
   );

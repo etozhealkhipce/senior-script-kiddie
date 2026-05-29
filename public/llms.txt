@@ -1,0 +1,30 @@
+# sskd.tech — Ilya Dyomin's blog
+
+> A developer's blog about life, software, travel, and everything in between.
+> Author: Ilya Dyomin, Software Developer from Kazakhstan.
+
+## About
+
+This site is a personal blog by Ilya Dyomin. Posts cover a broad range of topics:
+- Software development (web, frontend, backend, DevOps, Kubernetes)
+- Life in Kazakhstan and travels
+- Productivity and life hacks
+- Side projects and experiments
+
+## Content
+
+- /notes — All blog posts and notes
+- /about — About the author
+- /work — Projects and work experience
+
+## Technical
+
+- Site: https://sskd.tech
+- Built with Astro 5 (SSR), React 19, Tailwind CSS
+- Content managed via a custom headless CMS (NestJS backend)
+- Sitemap: https://sskd.tech/sitemap-index.xml
+
+## Contact
+
+- Email: alkhipce@mail.ru
+- GitHub: https://github.com/etozhealkhipce

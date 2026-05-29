@@ -11,6 +11,7 @@ app:
     NODE_ENV: "production"
     HOST: "0.0.0.0"
     PORT: "4321"
+    API_URL: "https://admin.sskd.tech/api"
 
   envFrom:
     - secretRef:

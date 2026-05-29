@@ -32,22 +32,20 @@ export const HomeContent = () => {
   }, []);
 
   return (
-    <>
-      <div ref={containerRef} className="space-y-8 opacity-0">
-        <div className="flex flex-col space-y-4 font-light">
-          <p className="w-fit split" ref={textRef}>
-            Hi there, I'm Ilya. I design and code for the web.
-          </p>
-        </div>
-        <div className="flex flex-col lg:ml-48" ref={linkRef}>
-          <div className="flex flex-col items-start space-y-2">
-            <Link href="/about" className="font-secondary !text-3xl lg:!text-5xl font-medium !p-0">
-              about me {">"}
-            </Link>
-            <span className="text-secondary font-secondary text-sm">little more info</span>
-          </div>
+    <div ref={containerRef} className="space-y-8 opacity-0">
+      <div className="flex flex-col space-y-4 font-light">
+        <p className="w-fit split" ref={textRef}>
+          Hi there, I'm Ilya. I design and code for the web.
+        </p>
+      </div>
+      <div className="flex flex-col lg:ml-48" ref={linkRef}>
+        <div className="flex flex-col items-start space-y-2">
+          <Link href="/about" className="font-secondary !text-3xl lg:!text-5xl font-medium !p-0">
+            about me {">"}
+          </Link>
+          <span className="text-secondary font-secondary text-sm">little more info</span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
