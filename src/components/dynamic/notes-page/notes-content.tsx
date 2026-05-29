@@ -54,34 +54,40 @@ export const NotesContent: FC<TProps> = ({ notes }) => {
         <ContentHeader title="notes" subtitle="thoughts, tutorials, and technical notes" />
       </div>
 
-      <div className="flex flex-col space-y-4 font-light">
+      <div className="flex flex-col font-light">
         {notes.length === 0 && <p className="text-neutral-500 text-sm">No notes yet.</p>}
-        {notes.map((note) => {
+        {notes.map((note, index) => {
           const subtitleItems = note.subtitle?.length
             ? note.subtitle
             : (note.tags ?? []).map((t) => ({ title: t, highlight: false }));
 
-          const subtitleNode = subtitleItems.map((item, index) => (
+          const subtitleNode = subtitleItems.map((item, i) => (
             <span key={item.title}>
               {item.highlight ? (
                 <span className="bg-accent/30 text-white">{item.title}</span>
               ) : (
                 item.title
               )}
-              {index !== subtitleItems.length - 1 && ", "}
+              {i !== subtitleItems.length - 1 && ", "}
             </span>
           ));
 
           return (
-            <NoteCard
-              ref={addToNotesRefs}
-              key={note.slug}
-              title={note.title}
-              subtitle={subtitleNode}
-              description={note.preview}
-              date={formatDate(note.createdAt)}
-              slug={note.slug}
-            />
+            <div key={note.slug} ref={addToNotesRefs}>
+              <NoteCard
+                title={note.title}
+                subtitle={subtitleNode}
+                description={note.preview}
+                date={formatDate(note.createdAt)}
+                slug={note.slug}
+              />
+
+              {index < notes.length - 1 && (
+                <div className="pb-8">
+                  <div className="h-px bg-linear-to-r from-transparent via-accent/25 to-transparent" />
+                </div>
+              )}
+            </div>
           );
         })}
       </div>

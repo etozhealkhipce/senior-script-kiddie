@@ -1,0 +1,57 @@
+---
+import { NoteContent } from "@/components/dynamic/notes-page/note-content";
+import Layout from "@/layouts/layout.astro";
+import { formatDate } from "@/lib/format-date";
+import { resolveUploads } from "@/lib/resolve-uploads";
+import { getNote } from "@/lib/api";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/404");
+}
+
+const note = await getNote(slug);
+
+if (!note) {
+  return Astro.redirect("/404");
+}
+
+Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+
+const apiUrl = process.env.API_URL ?? "http://localhost:3000";
+const { title, content, tags, subtitle, createdAt, preview } = note;
+const resolvedContent = resolveUploads(content, apiUrl);
+const date = formatDate(createdAt);
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: preview,
+  author: { "@type": "Person", name: "Ilya Dyomin" },
+  datePublished: createdAt,
+  keywords: tags?.join(", ") ?? "",
+  url: Astro.url.href,
+});
+---
+
+<Layout
+  title={title}
+  description={preview}
+  ogType="article"
+  keywords={tags ?? []}
+  publishedAt={createdAt}
+>
+  <script type="application/ld+json" set:html={jsonLd} slot="head" />
+  <NoteContent
+    client:load
+    title={title}
+    content={resolvedContent}
+    date={date}
+    tags={tags}
+    subtitle={subtitle}
+    backHref="/work"
+    backText="back to work"
+  />
+</Layout>

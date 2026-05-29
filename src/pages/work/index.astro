@@ -1,17 +1,26 @@
 ---
-import { getNotes } from "@/lib/api";
 import { WorkContent } from "@/components/dynamic/work-page/work-content";
 import Layout from "@/layouts/layout.astro";
+import { getNotes } from "@/lib/api";
 
 const projects = await getNotes("work");
 
-Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
+);
 ---
 
 <Layout
   title="work"
   description="Team and personal projects by Ilya Dyomin — web apps, open source, and more."
-  keywords={["projects", "work", "web development", "open source", "Ilya Dyomin"]}
+  keywords={[
+    "projects",
+    "work",
+    "web development",
+    "open source",
+    "Ilya Dyomin",
+  ]}
 >
   <WorkContent client:load projects={projects} />
 </Layout>

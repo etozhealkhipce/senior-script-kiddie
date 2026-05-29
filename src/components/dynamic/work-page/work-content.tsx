@@ -70,19 +70,25 @@ export const WorkContent: FC<Props> = ({ projects }) => {
         <ContentHeader title="work" subtitle="team and personal projects" />
       </div>
 
-      <div className="flex flex-col space-y-4 font-light">
+      <div className="flex flex-col font-light">
         {projects.length === 0 && <p className="text-neutral-500 text-sm">No projects yet.</p>}
-        {projects.map((project) => (
-          <ProjectCard
-            ref={addToProjectsRefs}
-            key={project.slug}
-            title={project.title}
-            subtitle={buildSubtitle(project)}
-            description={project.preview}
-            link={project.link ?? ""}
-            linkText={project.linkText ?? "view project >"}
-            target="_blank"
-          />
+        {projects.map((project, index) => (
+          <div key={project.slug} ref={addToProjectsRefs}>
+            <ProjectCard
+              title={project.title}
+              subtitle={buildSubtitle(project)}
+              description={project.preview}
+              link={project.link ?? `/work/${project.slug}`}
+              linkText={project.linkText ?? "view project >"}
+              target={project.link ? "_blank" : "_self"}
+            />
+
+            {index < projects.length - 1 && (
+              <div className="pb-8">
+                <div className="h-px bg-linear-to-r from-transparent via-accent/25 to-transparent" />
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>

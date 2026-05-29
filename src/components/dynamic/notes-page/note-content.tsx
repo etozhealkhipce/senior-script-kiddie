@@ -12,9 +12,19 @@ type Props = {
   date: string;
   tags?: string[] | null;
   subtitle?: SubtitleItem[] | null;
+  backHref?: string;
+  backText?: string;
 };
 
-export const NoteContent = ({ title, content, date, tags, subtitle }: Props) => {
+export const NoteContent = ({
+  title,
+  content,
+  date,
+  tags,
+  subtitle,
+  backHref = "/notes",
+  backText = "back to notes",
+}: Props) => {
   const items: SubtitleItem[] = subtitle?.length
     ? subtitle
     : (tags ?? []).map((t) => ({ title: t, highlight: false }));
@@ -80,8 +90,8 @@ export const NoteContent = ({ title, content, date, tags, subtitle }: Props) => 
   return (
     <div ref={containerRef} className="space-y-8 max-w-full lg:max-w-2xl opacity-0">
       <div className="mb-4">
-        <Link ref={backLinkRef} href={`/notes`} className="underline underline-offset-2 !text-base">
-          {"<"} back to notes
+        <Link ref={backLinkRef} href={backHref} className="underline underline-offset-2 !text-base">
+          {"<"} {backText}
         </Link>
       </div>
 
