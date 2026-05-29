@@ -1,11 +1,9 @@
 ---
 import { NoteContent } from "@/components/dynamic/notes-page/note-content";
-import type { NoteApiData } from "@/components/dynamic/notes-page/types";
 import Layout from "@/layouts/layout.astro";
 import { formatDate } from "@/lib/format-date";
 import { resolveUploads } from "@/lib/resolve-uploads";
-
-const API_URL = process.env.API_URL ?? "http://localhost:3000";
+import { getNote } from "@/lib/api";
 
 const { slug } = Astro.params;
 
@@ -13,26 +11,15 @@ if (!slug) {
   return Astro.redirect("/404");
 }
 
-let note: NoteApiData | null = null;
-try {
-  const res = await fetch(`${API_URL}/notes/${slug}`);
-  if (res.status === 404) {
-    return Astro.redirect("/404");
-  }
-  if (res.ok) {
-    note = await res.json();
-  }
-} catch (e) {
-  console.error(`[notes/${slug}] Failed to fetch note:`, e);
-  return Astro.redirect("/404");
-}
+const note = await getNote(slug);
 
 if (!note) {
   return Astro.redirect("/404");
 }
 
+const apiUrl = process.env.API_URL ?? "http://localhost:3000";
 const { title, content, tags, createdAt, preview } = note;
-const resolvedContent = resolveUploads(content, API_URL);
+const resolvedContent = resolveUploads(content, apiUrl);
 const date = formatDate(createdAt);
 
 // JSON-LD for blog post structured data
