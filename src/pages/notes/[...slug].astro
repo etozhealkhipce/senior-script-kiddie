@@ -17,8 +17,10 @@ if (!note) {
   return Astro.redirect("/404");
 }
 
+Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+
 const apiUrl = process.env.API_URL ?? "http://localhost:3000";
-const { title, content, tags, createdAt, preview } = note;
+const { title, content, tags, subtitle, createdAt, preview } = note;
 const resolvedContent = resolveUploads(content, apiUrl);
 const date = formatDate(createdAt);
 
@@ -49,5 +51,6 @@ const jsonLd = JSON.stringify({
     content={resolvedContent}
     date={date}
     tags={tags}
+    subtitle={subtitle}
   />
 </Layout>

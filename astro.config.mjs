@@ -20,7 +20,10 @@ export default defineConfig({
       noExternal: ["gsap", "@gsap/react"],
     },
   },
-  prefetch: true,
+  prefetch: { prefetchAll: true, defaultStrategy: "viewport" },
+  image: {
+    remotePatterns: [{ protocol: "https", hostname: "admin.sskd.tech" }],
+  },
   trailingSlash: "never",
   build: {
     format: "file",

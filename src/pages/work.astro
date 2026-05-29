@@ -4,6 +4,8 @@ import { WorkContent } from "@/components/dynamic/work-page/work-content";
 import Layout from "@/layouts/layout.astro";
 
 const projects = await getNotes("work");
+
+Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
 ---
 
 <Layout

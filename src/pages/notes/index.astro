@@ -4,6 +4,8 @@ import { NotesContent } from "@/components/dynamic/notes-page/notes-content";
 import Layout from "@/layouts/layout.astro";
 
 const notes = await getNotes("note");
+
+Astro.response.headers.set("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
 ---
 
 <Layout

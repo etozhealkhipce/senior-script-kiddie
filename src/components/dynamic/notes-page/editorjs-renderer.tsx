@@ -155,6 +155,8 @@ const renderBlock = (block: EditorBlock) => {
                   src={img.url}
                   alt={img.alt ?? img.caption ?? ""}
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     aspectRatio: count === 1 ? "16/9" : count === 3 && i === 0 ? "1/2" : "1/1",
                   }}
@@ -175,7 +177,7 @@ const renderBlock = (block: EditorBlock) => {
       if (!url) return null;
       return (
         <figure key={key} className="my-4">
-          <img src={url} alt={alt} className="rounded max-w-full" />
+          <img src={url} alt={alt} className="rounded max-w-full" loading="lazy" decoding="async" />
           {caption && (
             <figcaption className="text-xs text-neutral-500 mt-1 text-center">{caption}</figcaption>
           )}

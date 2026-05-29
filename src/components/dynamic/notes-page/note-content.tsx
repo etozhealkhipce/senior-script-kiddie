@@ -4,16 +4,21 @@ import { useRef } from "react";
 import { ContentHeader } from "@/components/dynamic/common/content-header";
 import { Link } from "@/components/dynamic/common/link";
 import { EditorJsRenderer } from "./editorjs-renderer";
-import type { EditorData } from "./types";
+import type { EditorData, SubtitleItem } from "./types";
 
 type Props = {
   title: string;
   content: EditorData | null;
   date: string;
   tags?: string[] | null;
+  subtitle?: SubtitleItem[] | null;
 };
 
-export const NoteContent = ({ title, content, date, tags }: Props) => {
+export const NoteContent = ({ title, content, date, tags, subtitle }: Props) => {
+  const items: SubtitleItem[] = subtitle?.length
+    ? subtitle
+    : (tags ?? []).map((t) => ({ title: t, highlight: false }));
+
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -84,19 +89,22 @@ export const NoteContent = ({ title, content, date, tags }: Props) => {
         <ContentHeader title={title} subtitle={`published on ${date}`} />
       </div>
 
-      {tags && tags.length > 0 && (
-        <div ref={tagsRef} className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span key={tag} className="px-2 py-1 text-xs bg-accent/20 text-white rounded">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      <div ref={tagsRef} className={items.length > 0 ? "flex flex-wrap gap-2" : undefined}>
+        {items.map((item) => (
+          <span
+            key={item.title}
+            className={`px-2 py-1 text-xs rounded ${
+              item.highlight ? "bg-accent/30 text-white" : "bg-accent/20 text-white"
+            }`}
+          >
+            {item.title}
+          </span>
+        ))}
+      </div>
 
       <div
         ref={contentRef}
-        className="prose prose-invert prose-sm max-w-none font-light leading-relaxed"
+        className="prose prose-invert prose-sm max-w-none font-light leading-relaxed [&_mark]:bg-accent/30 [&_mark]:text-white [&_mark]:not-italic [&_mark]:rounded [&_mark]:px-0.5"
       >
         {content ? (
           <EditorJsRenderer content={content} />

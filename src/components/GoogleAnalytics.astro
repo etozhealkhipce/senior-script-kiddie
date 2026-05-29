@@ -5,7 +5,7 @@ const storageKey = "SSKD-portfolio:cc_consent";
 ---
 
 {isProd && (
-  <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+  <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} async></script>
   <script define:vars={{ gaId, storageKey }}>
     function initGA() {
       if (!window.gtag) {

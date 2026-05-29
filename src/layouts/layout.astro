@@ -79,7 +79,7 @@ const pageTitle = title
       <Preloader client:load />
     </div>
 
-    <Background client:load transition:persist="background" />
+    <Background client:idle transition:persist="background" />
 
     <div
       class="relative mt-4 lg:mt-0 w-fit lg:w-64 flex-none lg:top-0 flex flex-col justify-between mb-4 lg:mb-0 pointer-events-none"
@@ -96,19 +96,19 @@ const pageTitle = title
             <a href="mailto:alkhipce@mail.ru">alkhipce@mail.ru</a>
           </div>
         </div>
-        <CookieBanner client:load />
+        <CookieBanner client:idle />
       </div>
     </div>
     <main class="flex-auto pointer-events-none" transition:animate="none">
       <nav class="mb-4 lg:mb-6">
-        <Breadcrumbs initialPath={Astro.url.pathname} client:load />
+        <Breadcrumbs initialPath={Astro.url.pathname} client:idle />
       </nav>
       <slot />
     </main>
     <div
       class="hidden relative w-64 lg:bottom-0 lg:flex justify-center lg:justify-end lg:items-end mr-0 pointer-events-none"
     >
-      <Navigation initialPath={Astro.url.pathname} client:load />
+      <Navigation initialPath={Astro.url.pathname} client:idle />
     </div>
   </body>
 </html>

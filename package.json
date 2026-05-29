@@ -15,6 +15,8 @@
     "@astrojs/node": "^9.5.3",
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/montserrat": "^5.2.8",
     "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.1.11",
     "@types/node-telegram-bot-api": "^0.64.13",

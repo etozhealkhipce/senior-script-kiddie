@@ -132,7 +132,7 @@ export const Background: FC = () => {
 
   return (
     <>
-      <div className="fixed inset-0 w-full h-screen pointer-events-none mix-blend-multiply bg-[url(https://static.tumblr.com/rxfwyqf/20Zlzzth8/noise.png)] opacity-15"></div>
+      <div className="fixed inset-0 w-full h-screen pointer-events-none mix-blend-multiply bg-[url(/noise.png)] opacity-15"></div>
 
       <svg
         aria-hidden="true"
