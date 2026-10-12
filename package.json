@@ -23,6 +23,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.11.0",
+    "drawably": "0.4.2",
     "esbuild": "0.25.0",
     "fontfaceobserver": "^2.3.0",
     "gsap": "^3.13.0",

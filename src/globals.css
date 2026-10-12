@@ -4,6 +4,9 @@
 @import "@fontsource/inter/latin.css";
 @import "@fontsource/inter/cyrillic.css";
 @import "tailwindcss";
+/* Hand-drawn controls (same library and theme as the admin). In the components
+   layer so Tailwind utilities passed via className still win. */
+@import "drawably/style.css" layer(components);
 
 @theme {
   --font-sans:
@@ -24,6 +27,24 @@
     100% {
       background-position: 100px 100px;
     }
+  }
+}
+
+/* drawably theme — keep in sync with admin-ui/src/index.css */
+:root {
+  --drawably-stroke: #d8d8d8;
+  --drawably-fill: #ffec99;
+  --drawably-paper: #262626;
+  --drawably-error: #f87171;
+  --drawably-success: #86efac;
+  --drawably-width: 2px;
+}
+
+@layer components {
+  /* drawably ships Inter; the site uses Montserrat */
+  .drawably-host,
+  .drawably-button {
+    font-family: var(--font-sans);
   }
 }
 

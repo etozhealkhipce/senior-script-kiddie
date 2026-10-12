@@ -1,37 +1,37 @@
-import { forwardRef } from "react";
+import { DrawablyButton } from "drawably/react";
+import type { ReactNode } from "react";
 
 type TButtonVariant = "primary" | "secondary";
 
 type TProps = {
   variant?: TButtonVariant;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
   disabled?: boolean;
 };
 
-const VARIANT_CLASSES: Record<TButtonVariant, string> = {
-  primary:
-    "rounded-md bg-accent px-3 py-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-accent/90 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-neutral-800",
-  secondary:
-    "rounded-md border border-neutral-500 bg-transparent px-3 py-2 text-sm font-medium text-neutral-300 transition-colors hover:border-neutral-400 hover:bg-neutral-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 focus:ring-offset-neutral-800",
-};
-
-export const Button = forwardRef<HTMLButtonElement, TProps>(
-  ({ variant = "primary", children, className = "", type = "button", onClick, disabled }, ref) => {
-    return (
-      <button
-        ref={ref}
-        type={type}
-        onClick={onClick}
-        disabled={disabled}
-        className={`${VARIANT_CLASSES[variant]} ${className}`.trim()}
-      >
-        {children}
-      </button>
-    );
-  },
+// Hand-drawn button, same library and look as the admin (admin-ui/src/ui/Button.tsx).
+// The label sits in its own span: drawably puts its sketch <svg> inside the button,
+// and React would wipe it when a bare text child changes.
+export const Button = ({
+  variant = "primary",
+  children,
+  className = "",
+  type = "button",
+  onClick,
+  disabled,
+}: TProps) => (
+  <DrawablyButton
+    key={variant}
+    type={type}
+    onClick={onClick}
+    disabled={disabled}
+    variant={variant === "primary" ? "solid" : "outline"}
+    boil={0}
+    className={`px-3 py-2 text-sm font-medium ${className}`.trim()}
+  >
+    <span>{children}</span>
+  </DrawablyButton>
 );
-
-Button.displayName = "Button";
