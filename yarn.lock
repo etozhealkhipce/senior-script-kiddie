@@ -2482,11 +2482,6 @@ domutils@^3.0.1:
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
 
-drawably@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/drawably/-/drawably-0.4.2.tgz#51bb976d299be430c668ef69c8a588090c7e74ed"
-  integrity sha512-kHLnj08iHHVgwXxn7htKszWMlGIOy+CqUTekInCwoAqITwIAYjD4E/K7PMF6GLj5bM/t7sxysv1WmVGPOKDJzA==
-
 dset@^3.1.4:
   version "3.1.4"
   resolved "https://registry.npmjs.org/dset/-/dset-3.1.4.tgz"
